@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BMERCP
+Bundle-SymbolicName: BMERCP;singleton:=true
+Bundle-Version: 1.0.0.202410160928
+Bundle-Activator: BMERCP.Activator
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,jakarta.annotati
+ on-api;bundle-version="2.1.1",jakarta.inject.jakarta.inject-api;bundle-
+ version="2.0.1",org.eclipse.emf.common;bundle-version="2.30.0",org.ecli
+ pse.emf.ecore;bundle-version="2.36.0",org.eclipse.emf.ecore.xmi;bundle-
+ version="2.37.0",DSML
+Bundle-ClassPath: .,lib/dom4j-2.1.4.jar,lib/antlr-4.13.1-complete.jar,li
+ b/saxon-he-12.4.jar,lib/xmlresolver-4.2.0.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: BMERCP
+Bundle-ActivationPolicy: lazy
+Eclipse-AutoStart: true
+
+

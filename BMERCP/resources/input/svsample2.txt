@@ -1,0 +1,145 @@
+module VerilogSimulation;
+
+int volumeORpressureMode;
+int Running_Mode;
+longint PCVmodeHandle;
+longint AC_VCVmodeHandle;
+longint AC_PCVmodeHandle;
+longint SIMV_SubSetHandle;
+longint VCVmodeHandle;
+longint CPAPmodeHandle;
+
+function void New_Mode_Shift();
+  case (Running_Mode)
+	1: begin 
+ 	volumeORpressureMode = 0;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(VCVmodeHandle);
+	end
+	2: begin 
+ 	volumeORpressureMode = 1;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(PCVmodeHandle);
+	end
+	3: begin 
+ 	volumeORpressureMode = 0;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(AC_VCVmodeHandle);
+	end
+	4: begin 
+ 	volumeORpressureMode = 1;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(AC_PCVmodeHandle);
+	end
+	5: begin 
+ 	volumeORpressureMode = 0;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(SIMVmodeHandle);
+ 	  osThreadResume(SIMV_SubSetHandle);
+	end
+	6: begin 
+ 	volumeORpressureMode = 0;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(CPAPmodeHandle);
+ 	/* 7. CPAP MODE SUSPENDED */
+ 	  osThreadResume(SIMV_PSVmodeHandle);
+	end
+	7: begin 
+ 	volumeORpressureMode = 1;
+ 	  Update_Internal_Parameters();
+ 	  osThreadSuspend(VCVmodeHandle);
+ 	/* 1. VCV MODE SUSPENDED */
+ 	  osThreadSuspend(PCVmodeHandle);
+ 	/* 2. PCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_VCVmodeHandle);
+ 	/* 3. AC-VCV MODE SUSPENDED */
+ 	  osThreadSuspend(AC_PCVmodeHandle);
+ 	/* 4. AC-PCV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_SubSetHandle);
+ 	  osThreadSuspend(SIMVmodeHandle);
+ 	/* 5. SIMV MODE SUSPENDED */
+ 	  osThreadSuspend(SIMV_PSVmodeHandle);
+ 	/* 6. SIMV-PSV MODE SUSPENDED */
+ 	  osThreadResume(CPAPmodeHandle);
+	end
+	default: begin
+	   end
+ endcase
+endfunction
+
+endmodule

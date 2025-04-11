@@ -1,0 +1,170 @@
+module VerilogSimulation;
+
+// #include <stdio.h> 
+// Constants
+const int DESIRED_SPEED_INCREMENT = 1;
+// Speed adjustment step (1 km/h)
+const int MAX_SPEED = 150;
+// Maximum allowed speed (in km/h)
+const int MIN_SPEED = 30;
+// Minimum allowed speed (in km/h)
+const int THROTTLE_MAX = 100;
+// Maximum throttle value (percentage)
+const int THROTTLE_MIN = 0;
+// Minimum throttle value (percentage)
+// Enum to represent the system states
+typedef enum logic[1:0] {  
+   CRUISE_OFF,
+   CRUISE_ON,
+   CRUISE_HOLD
+ } CruiseState;
+// Global Variables
+int currentSpeed=0;
+// Vehicle's current speed (km/h)
+int desiredSpeed=0;
+// The speed at which cruise control should maintain (km/h)
+int throttle=0;
+// Throttle level (0 to 100%)
+CruiseState states=CRUISE_OFF;
+// Initial states is OFF
+// Function to read the vehicle's current speed (mock function)
+
+function int readCurrentSpeed();
+  // Simulate reading speed from a sensor
+  // In real embedded system, this would interface with the vehicle's speed sensor
+    return currentSpeed;
+endfunction 
+
+// Function to control the throttle
+
+function void controlThrottle(int speedDifference );
+  if (speedDifference > 0) begin
+ 		throttle+=speedDifference;
+ 		// Increase throttle to speed up
+   end
+
+  else if (speedDifference < 0) begin
+ 		throttle+=speedDifference;
+ 		// Decrease throttle to slow down
+   end
+ // Clamp throttle to valid range (0% to 100%)
+  if (throttle > THROTTLE_MAX) begin
+ 		throttle = THROTTLE_MAX;
+   end
+  if (throttle < THROTTLE_MIN) begin
+ 		throttle = THROTTLE_MIN;
+   end
+  $display("Throttle set to: %d%%\n", throttle);
+endfunction 
+
+// Function to update the cruise control system state
+
+function void updateCruiseControl(int setButtonPressed , int increaseSpeed , int decreaseSpeed , int cancelButtonPressed );
+  int speedDifference;
+  case (states)
+	CRUISE_OFF: begin 
+ 	if (setButtonPressed && currentSpeed >= MIN_SPEED) begin
+ 		desiredSpeed = currentSpeed;
+ 		states = CRUISE_ON;
+ 		$display("Cruise Control ON. Holding speed at %d km/h\n", desiredSpeed);
+   end
+	end
+	CRUISE_ON: begin 
+ 	if (cancelButtonPressed) begin
+ 		states = CRUISE_OFF;
+ 		throttle = 0;
+ 		$display("Cruise Control OFF\n");
+   end
+
+  else if (increaseSpeed) begin
+ 		desiredSpeed+=DESIRED_SPEED_INCREMENT;
+ 		if (desiredSpeed > MAX_SPEED) begin
+ 		desiredSpeed = MAX_SPEED;
+   end
+ 		$display("Increasing desired speed to %d km/h\n", desiredSpeed);
+   end
+
+  else if (decreaseSpeed) begin
+ 		desiredSpeed-=DESIRED_SPEED_INCREMENT;
+ 		if (desiredSpeed < MIN_SPEED) begin
+ 		desiredSpeed = MIN_SPEED;
+   end
+ 		$display("Decreasing desired speed to %d km/h\n", desiredSpeed);
+   end
+
+  else   begin
+ 		states = CRUISE_HOLD;
+   end
+	end
+	CRUISE_HOLD: begin 
+	 	if (cancelButtonPressed) begin
+	 		states = CRUISE_OFF;
+	 		throttle = 0;
+	 		$display("Cruise Control OFF\n");
+	    end
+	
+	    else   begin
+	 		// Control the throttle to maintain the desired speed
+	 		speedDifference = desiredSpeed-currentSpeed;
+	 		  controlThrottle(speedDifference);
+	    end
+	end
+
+ endcase
+endfunction 
+
+// Main function (for simulation)
+
+function int main();
+  int setButtonPressed=0;
+  int increaseSpeed=0;
+  int decreaseSpeed=0;
+  int cancelButtonPressed=0;
+  // Simulation loop (replace with actual event-driven logic in real embedded system)
+  for (int i = 0;i < 20;i++) begin
+ 	// Simulate driving conditions (mock input)
+ 	currentSpeed = readCurrentSpeed();
+ 	// Read current speed
+ 	// Simulate user actions
+ 	if (i == 2) begin
+ 		setButtonPressed = 1;
+   end
+ // Set cruise control on at the 3rd iteration
+ 	if (i == 5) begin
+ 		increaseSpeed = 1;
+   end
+ // Increase desired speed at the 6th iteration
+ 	if (i == 7) begin
+ 		decreaseSpeed = 1;
+   end
+ // Decrease desired speed at the 8th iteration
+ 	if (i == 12) begin
+ 		cancelButtonPressed = 1;
+   end
+ // Cancel cruise control at 13th iteration
+ 	// Update cruise control system
+ 	  updateCruiseControl(setButtonPressed, increaseSpeed, decreaseSpeed, cancelButtonPressed);
+ 	// Reset user actions after handling
+ 	setButtonPressed = 0;
+ 	increaseSpeed = 0;
+ 	decreaseSpeed = 0;
+ 	cancelButtonPressed = 0;
+ 	// Simulate a speed increase/decrease for testing purposes
+ 	if (i < 10) begin
+ 		currentSpeed+=2;
+   end
+ // Simulate speed increase
+
+  else   begin
+ 		currentSpeed-=2;
+   end
+ 	// Simulate speed decrease
+ 	// Wait for a bit (simulate time passing)
+ 	for (int j = 0;j < 1000000;j++) begin
+  end
+ 	// Simple delay loop
+  end
+    return 0;
+endfunction
+
+endmodule

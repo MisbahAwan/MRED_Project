@@ -1,0 +1,172 @@
+2024-10-16 08:12:45:190 grammar LogManager.java:25 before: (COMBINED_GRAMMAR Tree2C (@ header {
+package Tree2CTransformation;
+}) (RULES (RULE EQEQ (BLOCK (ALT '"=="'))) (RULE EQ (BLOCK (ALT '"="'))) (RULE NOTEQ (BLOCK (ALT '"!="'))) (RULE PLUSPLUS (BLOCK (ALT '"++"'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE LT (BLOCK (ALT '<') (ALT '&lt;'))) (RULE GT (BLOCK (ALT '>') (ALT '&gt;'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE system (BLOCK (ALT (BLOCK (ALT declaration (* (BLOCK (ALT component)))))) (ALT (BLOCK (ALT (* (BLOCK (ALT component))) declaration)) EOF))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT functionprototype))) DECLARATION_CLOSE))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (? (BLOCK (ALT EXTERN))) DATATYPE '=' dataTypes NAME '=' ID (? (BLOCK (ALT SIZE '=' (BLOCK (ALT STRING) (ALT '""'))))) (? (BLOCK (ALT INITIAL_VALUE '=' (BLOCK (ALT STRING) (ALT '""'))))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' NAME '=' ID 'type' '=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT NAME '=' (BLOCK (ALT ID) (ALT '""'))))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (BLOCK (ALT ID) (ALT '""'))))) (? (BLOCK (ALT 'pointer' '=' (BLOCK (ALT STAR) (ALT '""'))))) '/>'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value=' (BLOCK (ALT ID) (ALT STRING) (ALT '""'))))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</if>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value=' ID '>' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (BLOCK (ALT SWITCH_CASE) (ALT SWITCH_DEFAULT)) (? (BLOCK (ALT 'value=' (BLOCK (ALT STRING) (ALT ID))))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</switchcase>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT ID) (ALT STRING))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (BLOCK (ALT ID) (ALT STRING) (ALT '""'))))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT PRINTF) (ALT DISPLAY))) (RULE dataTypes (BLOCK (ALT UINT8_T) (ALT UINT32_T) (ALT OSTHREADID) (ALT VOID) (ALT INT) (ALT CHAR) (ALT TICKTYPE_T) (ALT OSEVENT) (ALT FLOAT) (ALT LONGINT))) (RULE operator (BLOCK (ALT EQEQ) (ALT LT) (ALT GT) (ALT EQ) (ALT NOTEQ) (ALT GTEQ) (ALT LTEQ) (ALT PLUSPLUS) (ALT '""')))))
+2024-10-16 08:12:45:212 grammar LogManager.java:25 after: (COMBINED_GRAMMAR Tree2C (@ header {
+package Tree2CTransformation;
+}) (RULES (RULE EQEQ (BLOCK (ALT '"=="'))) (RULE EQ (BLOCK (ALT '"="'))) (RULE NOTEQ (BLOCK (ALT '"!="'))) (RULE PLUSPLUS (BLOCK (ALT '"++"'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE LT (BLOCK (ALT '<') (ALT '&lt;'))) (RULE GT (BLOCK (ALT '>') (ALT '&gt;'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE system (BLOCK (ALT (BLOCK (ALT declaration (* (BLOCK (ALT component)))))) (ALT (BLOCK (ALT (* (BLOCK (ALT component))) declaration)) EOF))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT functionprototype))) DECLARATION_CLOSE))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (? (BLOCK (ALT EXTERN))) DATATYPE '=' dataTypes NAME '=' ID (? (BLOCK (ALT SIZE '=' (SET STRING '""')))) (? (BLOCK (ALT INITIAL_VALUE '=' (SET STRING '""')))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' NAME '=' ID 'type' '=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT NAME '=' (SET ID '""')))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (SET ID '""')))) (? (BLOCK (ALT 'pointer' '=' (SET STAR '""')))) '/>'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value=' (SET ID STRING '""')))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</if>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value=' ID '>' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (SET SWITCH_CASE SWITCH_DEFAULT) (? (BLOCK (ALT 'value=' (SET STRING ID)))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</switchcase>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT (SET ID STRING)))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (SET ID STRING '""')))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT (SET PRINTF DISPLAY)))) (RULE dataTypes (BLOCK (ALT (SET UINT8_T UINT32_T OSTHREADID VOID INT CHAR TICKTYPE_T OSEVENT FLOAT LONGINT)))) (RULE operator (BLOCK (ALT (SET EQEQ LT GT EQ NOTEQ GTEQ LTEQ PLUSPLUS '""'))))))
+2024-10-16 08:12:45:232 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR Tree2C (@ header {
+package Tree2CTransformation;
+}) (RULES (RULE system (BLOCK (ALT (BLOCK (ALT declaration (* (BLOCK (ALT component)))))) (ALT (BLOCK (ALT (* (BLOCK (ALT component))) declaration)) EOF))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT functionprototype))) DECLARATION_CLOSE))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (? (BLOCK (ALT EXTERN))) DATATYPE '=' dataTypes NAME '=' ID (? (BLOCK (ALT SIZE '=' (SET STRING '""')))) (? (BLOCK (ALT INITIAL_VALUE '=' (SET STRING '""')))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' NAME '=' ID 'type' '=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT NAME '=' (SET ID '""')))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (SET ID '""')))) (? (BLOCK (ALT 'pointer' '=' (SET STAR '""')))) '/>'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value=' (SET ID STRING '""')))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</if>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value=' ID '>' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (SET SWITCH_CASE SWITCH_DEFAULT) (? (BLOCK (ALT 'value=' (SET STRING ID)))) '>' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch))) '</switchcase>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT (SET ID STRING)))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (SET ID STRING '""')))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT (SET PRINTF DISPLAY)))) (RULE dataTypes (BLOCK (ALT (SET UINT8_T UINT32_T OSTHREADID VOID INT CHAR TICKTYPE_T OSEVENT FLOAT LONGINT)))) (RULE operator (BLOCK (ALT (SET EQEQ LT GT EQ NOTEQ GTEQ LTEQ PLUSPLUS '""'))))))
+2024-10-16 08:12:45:232 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR Tree2CLexer (@ header {
+package Tree2CTransformation;
+}) (RULES (RULE T__0 (BLOCK (ALT '<attribute'))) (RULE T__1 (BLOCK (ALT '='))) (RULE T__2 (BLOCK (ALT '""'))) (RULE T__3 (BLOCK (ALT '/>'))) (RULE T__4 (BLOCK (ALT '<functionprototype'))) (RULE T__5 (BLOCK (ALT 'returnType='))) (RULE T__6 (BLOCK (ALT 'functionName='))) (RULE T__7 (BLOCK (ALT '>'))) (RULE T__8 (BLOCK (ALT '</functionprototype>'))) (RULE T__9 (BLOCK (ALT '<component'))) (RULE T__10 (BLOCK (ALT 'type'))) (RULE T__11 (BLOCK (ALT '</component>'))) (RULE T__12 (BLOCK (ALT '<parameter'))) (RULE T__13 (BLOCK (ALT 'qualifier'))) (RULE T__14 (BLOCK (ALT 'pointer'))) (RULE T__15 (BLOCK (ALT '<statement>'))) (RULE T__16 (BLOCK (ALT '</statement>'))) (RULE T__17 (BLOCK (ALT '<if'))) (RULE T__18 (BLOCK (ALT 'variable='))) (RULE T__19 (BLOCK (ALT 'operator='))) (RULE T__20 (BLOCK (ALT 'value='))) (RULE T__21 (BLOCK (ALT '</if>'))) (RULE T__22 (BLOCK (ALT '<switch'))) (RULE T__23 (BLOCK (ALT 'keyword="switch"'))) (RULE T__24 (BLOCK (ALT '</switch>'))) (RULE T__25 (BLOCK (ALT '<switchcase'))) (RULE T__26 (BLOCK (ALT '</switchcase>'))) (RULE T__27 (BLOCK (ALT '<assignment'))) (RULE T__28 (BLOCK (ALT 'leftAttribute='))) (RULE T__29 (BLOCK (ALT 'AssignedSide='))) (RULE T__30 (BLOCK (ALT '<functioncall'))) (RULE T__31 (BLOCK (ALT 'parameterString='))) (RULE T__32 (BLOCK (ALT '<comment'))) (RULE T__33 (BLOCK (ALT 'commentText='))) (RULE EQEQ (BLOCK (ALT '"=="'))) (RULE EQ (BLOCK (ALT '"="'))) (RULE NOTEQ (BLOCK (ALT '"!="'))) (RULE PLUSPLUS (BLOCK (ALT '"++"'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE LT (BLOCK (ALT '<') (ALT '&lt;'))) (RULE GT (BLOCK (ALT '>') (ALT '&gt;'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip)))))
+2024-10-16 08:12:45:372 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:463 semantics LogManager.java:25 tokens={EOF=-1, T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, T__31=32, T__32=33, T__33=34, EQEQ=35, EQ=36, NOTEQ=37, PLUSPLUS=38, GTEQ=39, LTEQ=40, STAR=41, IF=42, ELSE=43, SWITCH_CASE=44, SWITCH_DEFAULT=45, VOID=46, EXTERN=47, UINT8_T=48, UINT32_T=49, OSTHREADID=50, INT=51, CHAR=52, TICKTYPE_T=53, OSEVENT=54, FLOAT=55, LONGINT=56, FUNCTION_CALL=57, COMMENT=58, STATEMENT=59, COMPONENT=60, PARAMETER=61, SWITCH_CASE_TAG=62, DECLARATION_OPEN=63, DECLARATION_CLOSE=64, ISGLOBAL=65, DATATYPE=66, NAME=67, SIZE=68, INITIAL_VALUE=69, ID=70, NUMBER=71, STRING=72, LT=73, GT=74, SLASH=75, LBRACE=76, RBRACE=77, LPAREN=78, RPAREN=79, SEMICOLON=80, END_TAG=81, PRINTF=82, DISPLAY=83, WS=84}
+2024-10-16 08:12:45:463 semantics LogManager.java:25 strings={'<attribute'=1, '='=2, '""'=3, '/>'=4, '<functionprototype'=5, 'returnType='=6, 'functionName='=7, '>'=8, '</functionprototype>'=9, '<component'=10, 'type'=11, '</component>'=12, '<parameter'=13, 'qualifier'=14, 'pointer'=15, '<statement>'=16, '</statement>'=17, '<if'=18, 'variable='=19, 'operator='=20, 'value='=21, '</if>'=22, '<switch'=23, 'keyword="switch"'=24, '</switch>'=25, '<switchcase'=26, '</switchcase>'=27, '<assignment'=28, 'leftAttribute='=29, 'AssignedSide='=30, '<functioncall'=31, 'parameterString='=32, '<comment'=33, 'commentText='=34, '"=="'=35, '"="'=36, '"!="'=37, '"++"'=38, '"*"'=41, 'keyword="if"'=42, 'keyword="else"'=43, 'keyword="case"'=44, 'keyword="default"'=45, '"void"'=46, '"extern"'=47, '"uint8_t"'=48, '"uint32_t"'=49, '"osThreadId"'=50, '"int"'=51, '"char"'=52, '"TickType_t"'=53, '"osEvent"'=54, '"float"'=55, '"longint"'=56, 'functioncall'=57, 'comment'=58, 'statement'=59, 'component'=60, 'parameter'=61, 'switchcase'=62, '<declaration>'=63, '</declaration>'=64, 'isGlobal'=65, 'dataType'=66, 'name'=67, 'size'=68, 'initialValue'=69, '/'=75, '{'=76, '}'=77, '('=78, ')'=79, ';'=80, '</dSML:System>'=81, 'printf'=82, '$display'=83}
+2024-10-16 08:12:45:474 LL1 LogManager.java:25 
+DECISION 0 in rule system
+2024-10-16 08:12:45:474 LL1 LogManager.java:25 look=[10, <EOF>]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 1 in rule system
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[10, 63]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 2 in rule system
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[63, {10, 63}]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? false
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 3 in rule declaration
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[1, 5]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 4 in rule declaration
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[{1, 5}, 64]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 5 in rule attribute
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[47, 66]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 6 in rule attribute
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[68, {4, 69}]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 7 in rule attribute
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[69, 4]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 8 in rule functionprototype
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[13, 9]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 9 in rule component
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[13, {12, 16, 33, 63}]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 10 in rule component
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[33, 16, 63]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 11 in rule component
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[{16, 33, 63}, 12]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 12 in rule parameter
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[67, {4, 14..15, 66}]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 13 in rule parameter
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[66, {4, 14..15}]
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 
+DECISION 14 in rule parameter
+2024-10-16 08:12:45:475 LL1 LogManager.java:25 look=[14, {4, 15}]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 15 in rule parameter
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[15, 4]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 16 in rule statement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[18, 28, 31, 33, 63, {82..83}, 23]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 17 in rule ifstatement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[18, 18]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? false
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 18 in rule ifstatement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{3, 35..40, 73..74}, 21]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 19 in rule ifstatement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[19, 8]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 20 in rule ifstatement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[16, 18, 28, 31, 33, 63, {82..83}, 23]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 21 in rule ifstatement
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{16, 18, 23, 28, 31, 33, 63, 82..83}, 22]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 22 in rule switch
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[26, 25]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 23 in rule switch_case
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[21, 8]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 24 in rule switch_case
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[16, 18, 28, 31, 33, 63, {82..83}, 23]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 25 in rule switch_case
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{16, 18, 23, 28, 31, 33, 63, 82..83}, 27]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 26 in rule assignment
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{70, 72}, 20]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 27 in rule assignment
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{3, 35..40, 73..74}, 30]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 28 in rule assignment
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{3, 35..40, 70, 72..74}, 4]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 29 in rule operatorOrEmpty
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[{3, 35..40, 73..74}, 3]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? false
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 30 in rule assignedSide
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 look=[70, 72, {3, 35..40, 73..74}, 3]
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 LL(1)? false
+2024-10-16 08:12:45:476 LL1 LogManager.java:25 
+DECISION 31 in rule functioncall
+2024-10-16 08:12:45:478 LL1 LogManager.java:25 look=[32, 4]
+2024-10-16 08:12:45:478 LL1 LogManager.java:25 LL(1)? true
+2024-10-16 08:12:45:478 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:544 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:544 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:548 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:548 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:550 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:550 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:551 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+
+2024-10-16 08:12:45:552 action-translator LogManager.java:25 translate 
+package Tree2CTransformation;
+

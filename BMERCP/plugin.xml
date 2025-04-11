@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="BMERCP.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="BMERCP.Perspective"
+            name="Perspective"
+            id="BMERCP.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="BMERCP.BME_GUI_View"
+            icon="resources/icons/MRED2.jpg"
+            id="BMERCP.view"
+            inject="false"
+            name="MRED">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               id="BMERCP.view"
+               minimized="false"
+               relationship="left"
+               standalone="true"
+               relative="org.eclipse.ui.editorss">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="BMERCP.application"
+            name="BME">
+         <property
+               name="appName"
+               value="BME">
+         </property>
+      </product>
+   </extension>
+   
+   <extension
+    point="org.eclipse.emf.ecore.generated_package">
+    <package
+        uri="http://www.example.org/dSML"
+        class="org.eclipse.example.dsml.DSMLPackage"/>
+   </extension>
+
+
+</plugin>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+<declaration>
+chan writePin;
+chan main;
+chan wait;
+chan readPin;
+chan transmit;
+chan receive;
+chan getTick;
+chan start;
+chan stop;
+chan setValue;
+int New_Mode_Flag;
+int initial_flag;
+int Running_Mode;
+int Set_Button;
+int Start_Button;
+int Standby_Button;
+int check_flag_VCV;
+int In_Init_Flag;
+int In_Start_Tick;
+int InEx_Flag;
+int peep_observed;
+int In_End_Tick;
+int Ex_Init_Flag;
+int p_plateau_flag;
+int p_plateau_cycles;
+int p_plateau;
+int Exhale_Time;
+int Inhale_Time;
+int ExtraDelayFlag;
+int volumeORpressureMode;
+int Sensors_Running;
+int check_flag_sensors;
+int VCVmodeHandle;
+int SensorsHandle;
+int txx[13];
+int cmd_end[3];
+int t3;
+int VCV_InRet;
+int get_pressure            
+</declaration>
+<template>
+	<name>Sudo_main</name>
+	<location id="id0" x="0" y="0">
+	</location>
+	<init ref="id0"/>
+	<transition>
+		<source ref="id0"/>
+		<target ref="id0"/>
+		<label kind="synchronisation" x="18" y="-46">main!</label>
+		<nail x="119" y="-59"/>
+		<nail x="144" y="119"/>
+	</transition>
+</template>
+<template>
+	<name>HAL_GetTick</name>
+	<location id="id1" x="0" y="0">
+	</location>
+	<init ref="id1"/>
+	<transition>
+		<source ref="id1"/>
+		<target ref="id1"/>
+		<label kind="synchronisation" x="18" y="-46">getTick?</label>
+		<nail x="119" y="-59"/>
+		<nail x="144" y="119"/>
+	</transition>
+</template>
+<template>
+	<name>HAL_UART_Transmit</name>
+	<location id="id2" x="0" y="0">
+	</location>
+	<init ref="id2"/>
+	<transition>
+		<source ref="id2"/>
+		<target ref="id2"/>
+		<label kind="synchronisation" x="18" y="-46">transmit?</label>
+		<nail x="119" y="-59"/>
+		<nail x="144" y="119"/>
+	</transition>
+</template>
+<template>
+	<name>HAL_GPIO_WritePin</name>
+	<location id="id3" x="0" y="0">
+	</location>
+	<init ref="id3"/>
+	<transition>
+		<source ref="id3"/>
+		<target ref="id3"/>
+		<label kind="synchronisation" x="18" y="-46">writePin?</label>
+		<nail x="119" y="-59"/>
+		<nail x="144" y="119"/>
+	</transition>
+</template>
+<template>
+	<name>Start_VCVmode  </name>
+	<location id="id4" x="-650" y="-42">
+	</location>
+	<location id="id5" x="-500" y="-42">
+	</location>
+	<location id="id6" x="-350" y="-42">
+	</location>
+	<location id="id7" x="-200" y="-42">
+	</location>
+	<location id="id8" x="-50" y="-42">
+	</location>
+	<location id="id9" x="100" y="-42">
+	</location>
+	<location id="id10" x="250" y="-42">
+	</location>
+	<location id="id11" x="250" y="50">
+	</location>
+	<location id="id12" x="400" y="-42">
+	</location>
+	<location id="id13" x="550" y="-42">
+	</location>
+	<location id="id14" x="700" y="-42">
+	</location>
+	<location id="id15" x="850" y="-42">
+	</location>
+	<location id="id16" x="1000" y="-42">
+	</location>
+	<location id="id17" x="1150" y="-42">
+	</location>
+	<location id="id18" x="1300" y="-42">
+	</location>
+	<location id="id19" x="1450" y="-42">
+	</location>
+	<location id="id20" x="1600" y="-42">
+	</location>
+	<location id="id21" x="1750" y="-42">
+	</location>
+	<location id="id22" x="1900" y="-42">
+	</location>
+	<location id="id23" x="2050" y="-42">
+	</location>
+	<location id="id24" x="2200" y="-42">
+	</location>
+	<location id="id25" x="2350" y="-42">
+	</location>
+	<location id="id26" x="2500" y="-42">
+	</location>
+	<location id="id27" x="2650" y="-42">
+	</location>
+	<location id="id28" x="2800" y="-42">
+	</location>
+	<location id="id29" x="2950" y="-42">
+	</location>
+<init ref="id4"/>
+<transition>
+	<source ref="id4"/>
+	<target ref="id5"/>
+	<label kind="synchronisation" x="-625" y="-42">main?</label>
+</transition>
+<transition>
+	<source ref="id5"/>
+	<target ref="id6"/>
+	<label kind="select" x="-500" y="-32">rand1:int[0,1],
+rand2:int[0,50]</label>
+	<label kind="assignment" x="-490" y="3">Set_Button=rand1,
+p_plateau_cycles=rand2,
+initial_flag=rand1,
+New_Mode_Flag=rand1,
+Standby_Button=rand1,
+Start_Button=rand1,
+Running_Mode=rand1,
+</label>
+</transition>
+<transition>
+	<source ref="id6"/>
+	<target ref="id7"/>
+	<label kind="guard" x="-340" y="-32">New_Mode_Flag == 1</label>
+	<label kind="assignment" x="-340" y="-12"> New_Mode_Flag = 0 </label>
+</transition>
+ <transition>
+	<source ref="id7"/>
+	<target ref="id8"/>
+	<label kind="guard" x="-190" y="-32">initial_flag == 1</label>
+	<label kind="assignment" x="-190" y="-12"> initial_flag = 0 </label>
+  </transition>
+<transition>
+	<source ref="id8"/>
+	<target ref="id9"/>
+	<label kind="synchronisation" x="-15" y="-32">getTick!</label>
+</transition>
+ <transition>
+	<source ref="id9"/>
+	<target ref="id10"/>
+</transition>
+  <transition>
+	<source ref="id7"/>
+	<target ref="id11"/>
+	<label kind="guard" x="-40" y="60">Running_Mode != 1</label>
+ 	<label kind="assignment" x="-40" y="80">VCVmodeHandle = 0 </label>
+ </transition>
+<transition>
+	<source ref="id11"/>
+	<target ref="id10"/>
+</transition>
+<transition>
+	<source ref="id6"/>
+	<target ref="id10"/>
+	<label kind="guard" x="-300" y="-127">New_Mode_Flag != 1</label>
+	<nail x="-350" y="-127"/>
+	<nail x="250" y="-127"/>
+</transition>
+<transition>
+	<source ref="id10"/>
+	<target ref="id12"/>
+	<label kind="guard" x="260" y="-32">Set_Button == 1</label>
+	<label kind="assignment" x="260" y="-12"> Set_Button = 0,
+  volumeORpressureMode = 0 </label>
+     </transition>
+<transition>
+	<source ref="id10"/>
+	<target ref="id12"/>
+	<label kind="guard" x="300" y="-127">Set_Button != 1</label>
+	<nail x="250" y="-127"/>
+	<nail x="400" y="-127"/>
+</transition>
+<transition>
+	<source ref="id12"/>
+	<target ref="id13"/>
+	<label kind="guard" x="410" y="-32">Start_Button == 1</label>
+	<label kind="assignment" x="410" y="-12"> Start_Button = 0,
+  SensorsHandle = 1,
+  Sensors_Running = 1 </label>
+     </transition>
+<transition>
+	<source ref="id12"/>
+	<target ref="id13"/>
+	<label kind="guard" x="450" y="-127">Start_Button != 1</label>
+	<nail x="400" y="-127"/>
+	<nail x="550" y="-127"/>
+</transition>
+<transition>
+	<source ref="id13"/>
+	<target ref="id14"/>
+	<label kind="guard" x="560" y="-32">Standby_Button == 1</label>
+	<label kind="assignment" x="560" y="-12"> Standby_Button = 0,
+    Sensors_Running = 0 </label>
+   </transition>
+<transition>
+	<source ref="id13"/>
+	<target ref="id14"/>
+	<label kind="guard" x="600" y="-127">Standby_Button != 1</label>
+	<nail x="550" y="-127"/>
+	<nail x="700" y="-127"/>
+</transition>
+<transition>
+	<source ref="id14"/>
+	<target ref="id15"/>
+	<label kind="assignment" x="600" y="-17"> check_flag_VCV++,
+  check_flag_sensors = 0 </label>
+  </transition>
+<transition>
+	<source ref="id15"/>
+	<target ref="id16"/>
+	<label kind="synchronisation" x="885" y="-32">writePin!</label>
+</transition>
+     <transition>
+	<source ref="id16"/>
+	<target ref="id17"/>
+	<label kind="assignment" x="600" y="-17"> In_Init_Flag = 1,
+  InEx_Flag = 1 </label>
+  </transition>
+<transition>
+	<source ref="id17"/>
+	<target ref="id18"/>
+	<label kind="synchronisation" x="1185" y="-32">writePin!</label>
+</transition>
+    <transition>
+	<source ref="id18"/>
+	<target ref="id19"/>
+	<label kind="synchronisation" x="1335" y="-32">getTick!</label>
+</transition>
+    <transition>
+	<source ref="id19"/>
+	<target ref="id20"/>
+	<label kind="synchronisation" x="1485" y="-32">writePin!</label>
+</transition>
+ <transition>
+	<source ref="id20"/>
+	<target ref="id21"/>
+	<label kind="guard" x="1610" y="-32">VCV_InRet != osEventTimeout</label>
+ </transition>
+<transition>
+	<source ref="id21"/>
+	<target ref="id22"/>
+	<label kind="synchronisation" x="1785" y="-32">getTick!</label>
+</transition>
+ <transition>
+	<source ref="id22"/>
+	<target ref="id23"/>
+	<label kind="assignment" x="1610" y="-17"> ExtraDelayFlag = 1,
+    ExtraDelayFlag = 0 </label>
+ </transition>
+<transition>
+	<source ref="id20"/>
+	<target ref="id23"/>
+	<label kind="guard" x="1650" y="-127">VCV_InRet == osEventTimeout</label>
+	<nail x="1600" y="-127"/>
+	<nail x="2050" y="-127"/>
+</transition>
+<transition>
+	<source ref="id23"/>
+	<target ref="id24"/>
+	<label kind="assignment" x="1650" y="-17"> Ex_Init_Flag = 1,
+  InEx_Flag = 0,
+  p_plateau_cycles = p_plateau_cycles + 1 </label>
+</transition>
+ <transition>
+	<source ref="id24"/>
+	<target ref="id25"/>
+	<label kind="guard" x="2210" y="-32">p_plateau_cycles &gt;= 50</label>
+	<label kind="assignment" x="2210" y="-12"> count = 0,
+  p_plateau_flag = 1,
+    p_plateau = get_pressure,
+  txx[0] = 112,
+  txx[1] = 112,
+  txx[2] = 108,
+  txx[3] = 97,
+  txx[4] = 116,
+  txx[5] = 46,
+  txx[6] = 118,
+  txx[7] = 97,
+  txx[8] = 108,
+  txx[9] = 61,
+  txx[10] = (p_plateau)/100 + 48,
+  txx[11] = (p_plateau % 100)/10 + 48,
+  txx[12] = (p_plateau)%10 + 48,
+  </label>
+</transition>
+<transition>
+	<source ref="id25"/>
+	<target ref="id26"/>
+	<label kind="synchronisation" x="2385" y="-32">transmit!</label>
+</transition>
+     <transition>
+	<source ref="id26"/>
+	<target ref="id27"/>
+	<label kind="assignment" x="2210" y="-17"> p_plateau_cycles = 0,
+  p_plateau_flag = 0 </label>
+ </transition>
+<transition>
+	<source ref="id24"/>
+	<target ref="id27"/>
+	<label kind="guard" x="2250" y="-127">p_plateau_cycles &lt; 50</label>
+	<nail x="2200" y="-127"/>
+	<nail x="2650" y="-127"/>
+</transition>
+ <transition>
+	<source ref="id27"/>
+	<target ref="id28"/>
+	<label kind="synchronisation" x="2685" y="-32">writePin!</label>
+</transition>
+           <transition>
+	<source ref="id28"/>
+	<target ref="id29"/>
+	<label kind="assignment" x="2250" y="-17"> peep_observed = get_pressure,
+        </label>
+</transition>
+<transition>
+	<source ref="id29"/>
+	<target ref="id5"/>
+	<label kind="synchronisation" x="1175" y="108">main?</label>
+	<nail x="2950" y="108" />
+	<nail x="-500" y="108" />
+</transition>
+</template>
+<system> system Sudo_main,Start_VCVmode,HAL_GetTick,HAL_UART_Transmit,HAL_GPIO_WritePin;</system>
+<queries>
+	<query>
+		<formula></formula>
+		<comment></comment>
+	</query>
+</queries>
+</nta>

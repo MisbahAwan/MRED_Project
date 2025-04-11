@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dSML:System
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:dSML="http://www.example.org/dSML">
+  <declaration>
+    <attribute
+        isGlobal="extern"
+        dataType="uint8_t"
+        name="volumeORpressureMode"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="uint8_t"
+        name="Running_Mode"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="PCVmodeHandle"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="AC_VCVmodeHandle"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="AC_PCVmodeHandle"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="SIMV_SubSetHandle"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="VCVmodeHandle"
+        size=""
+        initialValue=""/>
+
+    <attribute
+        isGlobal="extern"
+        dataType="osThreadId"
+        name="CPAPmodeHandle"
+        size=""
+        initialValue=""/>
+
+  </declaration>
+  <component
+      name="New_Mode_Shift"
+      type="void">
+ <statement>
+  <switch
+      keyword="switch"
+      value="Running_Mode">
+  <switchcase
+    keyword="case"
+    value="1">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="0"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="VCVmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="2">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="1"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="PCVmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="3">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="0"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="AC_VCVmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="4">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="1"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="AC_PCVmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="5">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="0"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="SIMVmodeHandle"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="SIMV_SubSetHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="6">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="0"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="CPAPmodeHandle"/>
+
+    <comment  commentText="/* 7. CPAP MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="case"
+    value="7">
+      <assignment
+          leftAttribute="volumeORpressureMode"
+          operator="="
+          AssignedSide="1"/>
+
+      <functioncall
+          functionName="Update_Internal_Parameters"
+          parameterString=""/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="VCVmodeHandle"/>
+
+    <comment  commentText="/* 1. VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="PCVmodeHandle"/>
+
+    <comment  commentText="/* 2. PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_VCVmodeHandle"/>
+
+    <comment  commentText="/* 3. AC-VCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="AC_PCVmodeHandle"/>
+
+    <comment  commentText="/* 4. AC-PCV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_SubSetHandle"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMVmodeHandle"/>
+
+    <comment  commentText="/* 5. SIMV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadSuspend"
+          parameterString="SIMV_PSVmodeHandle"/>
+
+    <comment  commentText="/* 6. SIMV-PSV MODE SUSPENDED */"/>
+
+      <functioncall
+          functionName="osThreadResume"
+          parameterString="CPAPmodeHandle"/>
+
+      </switchcase>
+  <switchcase
+    keyword="default">
+      </switchcase>
+
+   </switch>
+   </statement>
+  </component>
+
+</dSML:System>

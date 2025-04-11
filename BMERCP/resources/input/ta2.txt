@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'flat-1_2.dtd'>
+<nta>
+   <declaration>
+  	int volumeORpressureMode;
+  	int Running_Mode;
+  	int PCVmodeHandle;
+  	int AC_VCVmodeHandle;
+  	int AC_PCVmodeHandle;
+  	int SIMV_SubSetHandle;
+  	int VCVmodeHandle;
+  	int CPAPmodeHandle;
+
+
+// Posting Declarations from all templates here:
+
+   </declaration>
+   <template>
+//TEMPLATE_RETURN_TYPE:void
+      <name>New_Mode_Shift</name>
+      <parameter></parameter>
+      <location id="id0" x="1500" y="10">
+      <name>Loc0</name>
+      </location>
+      <location id="id1" x="1650" y="250">
+      <name>Loc1</name>
+      </location>
+      <location id="id2" x="1800" y="10">
+      <name>Loc2</name>
+      </location>
+      <location id="id3" x="1950" y="250">
+      <name>Loc3</name>
+      </location>
+      <location id="id4" x="2100" y="10">
+      <name>Loc4</name>
+      </location>
+      <location id="id5" x="2250" y="250">
+      <name>Loc5</name>
+      </location>
+      <location id="id6" x="2400" y="10">
+      <name>Loc6</name>
+      </location>
+      <location id="id7" x="2550" y="250">
+      <name>Loc7</name>
+      </location>
+      <location id="id8" x="2700" y="10">
+      <name>Loc8</name>
+      </location>
+      <location id="id9" x="2850" y="250">
+      <name>Loc9</name>
+      </location>
+     <init ref="id0"/>
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="guard">switch== Running_Mode</label>
+    </transition>
+    <transition>
+        <source ref="id1"/>
+        <target ref="id2"/>
+        <label kind="guard">Running_Mode==1</label>
+        <label kind="assignment">		volumeORpressureMode = 0,
+		Update_Internal_Parameters(),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(VCVmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id2"/>
+        <target ref="id3"/>
+        <label kind="guard">Running_Mode==2</label>
+        <label kind="assignment">		volumeORpressureMode = 1,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(PCVmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id3"/>
+        <target ref="id4"/>
+        <label kind="guard">Running_Mode==3</label>
+        <label kind="assignment">		volumeORpressureMode = 0,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(AC_VCVmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id4"/>
+        <target ref="id5"/>
+        <label kind="guard">Running_Mode==4</label>
+        <label kind="assignment">		volumeORpressureMode = 1,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(AC_PCVmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id5"/>
+        <target ref="id6"/>
+        <label kind="guard">Running_Mode==5</label>
+        <label kind="assignment">		volumeORpressureMode = 0,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(SIMVmodeHandle),
+		osThreadResume(SIMV_SubSetHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id6"/>
+        <target ref="id7"/>
+        <label kind="guard">Running_Mode==6</label>
+        <label kind="assignment">		volumeORpressureMode = 0,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(CPAPmodeHandle),
+		osThreadResume(SIMV_PSVmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id7"/>
+        <target ref="id8"/>
+        <label kind="guard">Running_Mode==7</label>
+        <label kind="assignment">		volumeORpressureMode = 1,
+		Update_Internal_Parameters(),
+		osThreadSuspend(VCVmodeHandle),
+		osThreadSuspend(PCVmodeHandle),
+		osThreadSuspend(AC_VCVmodeHandle),
+		osThreadSuspend(AC_PCVmodeHandle),
+		osThreadSuspend(SIMV_SubSetHandle),
+		osThreadSuspend(SIMVmodeHandle),
+		osThreadSuspend(SIMV_PSVmodeHandle),
+		osThreadResume(CPAPmodeHandle)</label>
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id8"/>
+        <target ref="id9"/>
+        <label kind="guard">def==1</label>
+    </transition>
+//BREAK_STATEMENT
+//SWITCH_STATEMENT_CLOSED
+   </template>
+<system>system New_Mode_Shift;</system>
+<queries>
+ <query>
+	  <formula></formula>
+	  <comment></comment>
+ </query>
+</queries>
+</nta>
+

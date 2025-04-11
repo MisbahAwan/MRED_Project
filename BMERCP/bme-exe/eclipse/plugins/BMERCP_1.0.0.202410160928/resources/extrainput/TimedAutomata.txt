@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta> 
+    <declaration>
+            extern unint8_t Initial_Flag_1122334;
+            extern unint8_t New_Mode_Flag;
+            extern unint8_t Running_Mode;
+            extern uint8_t Set_Button;
+            extern uint8_t Start_Button;
+            extern uint8_t Standby_Button;
+            extern uint32_t check_flag_VCV;
+            extern uint8_t In_Init_Flag;
+            extern uint32_t In_Start_Tick;
+            extern uint8_t InEx_Flag;
+            extern uint32_t peep_observed;
+            extern uint32_t In_End_Tick;
+            extern uint8_t Ex_Init_Flag;
+            extern uint8_t p_plateau_flag;
+            extern uint32_t p_plateau_cycles;
+            extern uint32_t p_plateau;
+            extern uint32_t Exhale_Time;
+            extern uint32_t Inhale_Time;
+            extern uint8_t ExtraDelayFlag;
+            extern uint8_t volumeORpressureMode;
+            extern uint8_t Sensors_Running;
+            extern uint32_t check_flag_sensors;
+            extern osThreadId VCVmodeHandle;
+            extern osThreadId SensorsHandle;
+            extern char txx;
+            extern uint8_t cmd_end;
+            extern TickType_t t3;
+            extern osEvent VCV_InRet;
+    </declaration>
+
+        <template>
+            <name>StartVCVmode</name>
+                
+                        <location id="id0" x="10" y="20"></location>
+                        <location id="id0" x="10" y="20"></location>
+                        <location id="id0" x="10" y="20"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                        <location id="id0" x="10" y="20"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                        <location id="id0" x="10" y="20"></location>
+                        <location id="id0" x="10" y="20"></location>
+                        <location id="id0" x="10" y="20"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                        <location id="id0" x="10" y="20"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                       <location id="id0" x="0" y="0"></location>
+                        <location id="id0" x="10" y="20"></location>
+            <init ref="id0"/>
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Initial_Flag == 1</label>
+                                            <label kind="assignment" x="0" y="0"> Initial_Flag_1122334 = 0,t3 = HAL_GetTick(), </label>
+	                                   </transition>
+                                        
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Initial_Flag == 0</label>
+                                            <label kind="assignment" x="0" y="0"> Initial_Flag_1122334 = 1, </label>
+	                                   </transition>
+                                        
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Running_Mode != 1</label>
+                                            <label kind="assignment" x="0" y="0">VCVmodeHandle = 0, </label>
+	                                   </transition>
+	                                   <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="assignment" x="0" y="0"> New_Mode_Flag = 1,  </label>
+	                                   </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">Initial_Flag_1122334 = 0,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">Initial_Flag_1122334 = 1,</label>
+				                    </transition>
+	                                    <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+	 										<label kind="guard" x="0" y="0">Running_Mode == 1</label>
+                                            <label kind="assignment" x="0" y="0"> Initial_Flag_1122334 = 1, </label>
+										</transition>
+	                                    <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+	 										<label kind="guard" x="0" y="0">Running_Mode == 2</label>
+                                            <label kind="assignment" x="0" y="0"> Initial_Flag_1122334 = 1, </label>
+										</transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">Initial_Flag_1122334 = 0,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">Initial_Flag_1122334 = 1,</label>
+				                    </transition>
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Set_Button == 1</label>
+                                            <label kind="assignment" x="0" y="0"> Set_Button = 0,volumeORpressureMode = 0, </label>
+	                                   </transition>
+                                        
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Start_Button == 1</label>
+                                            <label kind="assignment" x="0" y="0"> Start_Button = 0,SensorsHandle = 1,Sensors_Running = 1, </label>
+	                                   </transition>
+                                        
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">Standby_Button == 1</label>
+                                            <label kind="assignment" x="0" y="0"> Standby_Button = 0,Sensors_Running = 0, </label>
+	                                   </transition>
+                                        
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">check_flag_VCV = check_flag_VCV+1,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">check_flag_sensors = 0,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">In_Init_Flag = 1,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">InEx_Flag = 1,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">In_Start_Tick = HAL_GetTick(),</label>
+				                    </transition>
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">VCV_InRet.status != 20</label>
+                                            <label kind="assignment" x="0" y="0"> In_End_Tick = HAL_GetTick(),ExtraDelayFlag = 1,ExtraDelayFlag = 0, </label>
+	                                   </transition>
+                                        
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">Ex_Init_Flag = 1,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">InEx_Flag = 0,</label>
+				                    </transition>
+				                    <transition>
+				                        <source ref="id0"/>
+				                        <target ref="id1"/>
+				                        <label kind="assignment" x="0" y="0">p_plateau_cycles = p_plateau_cycles+1,</label>
+				                    </transition>
+                                        <transition>
+				                            <source ref="id0"/>
+				                            <target ref="id1"/>
+			                                <label kind="guard" x="0" y="0">p_plateau_cycles >= 50</label>
+                                            <label kind="assignment" x="0" y="0"> VCVmodeHandle = 0,p_plateau_flag = 1,p_plateau = get_pressure(),p_plateau_cycles = 0,p_plateau_flag = 0, </label>
+	                                   </transition>
+                                        
+        </template>
+
+    <system>
+            StartVCVmode,
+    </system>
+
+    <queries>
+        <query>
+            <formula></formula>
+            <comment></comment>
+        </query>
+    </queries>
+</nta>

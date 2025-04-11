@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: DSML;singleton:=true
+Automatic-Module-Name: DSML
+Bundle-Version: 0.1.0.202410160928
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: dSML,dSML.impl,dSML.util
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,org.eclipse.c
+ ore.runtime
+Bundle-ActivationPolicy: lazy
+Import-Package: javax.xml.parsers;version="0.0.0",javax.xml.transform;ve
+ rsion="0.0.0",javax.xml.transform.sax;version="0.0.0",org.w3c.dom;versi
+ on="0.0.0",org.xml.sax;version="0.0.0",org.xml.sax.helpers;version="0.0
+ .0"
+
+

@@ -1,0 +1,332 @@
+2025-04-11 00:40:07:842 grammar LogManager.java:25 before: (COMBINED_GRAMMAR C2Tree (@ header {
+package C2TreeTransformations;
+}) (RULES (RULE IF (BLOCK (ALT 'if'))) (RULE EXTERN (BLOCK (ALT 'extern'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE INCLUDE (BLOCK (ALT '#include'))) (RULE DEFINE (BLOCK (ALT '#define'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE VOLATILE (BLOCK (ALT 'volatile'))) (RULE ID (BLOCK (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z0-9_.])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE SINGLE_LINE_COMMENT (BLOCK (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))))) (RULE MULTI_LINE_COMMENT (BLOCK (ALT '/*' (* (BLOCK (ALT .))) '*/'))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT '\\"') (ALT (~ (SET ["]))))) '"'))) (RULE CHAR (BLOCK (ALT '\'' . '\''))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '=+'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOUBLE_QUOTE (BLOCK (ALT '"'))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE AND (BLOCK (ALT '&&'))) (RULE OR (BLOCK (ALT '||'))) (RULE file (BLOCK (ALT (* (BLOCK (ALT preprocessorDirective) (ALT includeDirective) (ALT comment) (ALT moduleDecl))) EOF))) (RULE preprocessorDirective (BLOCK (ALT DEFINE ID (? (BLOCK (ALT EQUAL))) INT (? (BLOCK (ALT SEMICOLON)))))) (RULE includeDirective (BLOCK (ALT INCLUDE (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT LT ID GT))) (RULE localInclude (BLOCK (ALT DOUBLE_QUOTE ID DOUBLE_QUOTE))) (RULE moduleDecl (BLOCK (ALT moduleItem))) (RULE moduleItem (BLOCK (ALT declaration) (ALT functionDecl) (ALT statement) (ALT enumDecl))) (RULE enumDecl (BLOCK (ALT TYPEDEF ENUM LBRACE enumList RBRACE ID SEMICOLON))) (RULE enumList (BLOCK (ALT ID (* (BLOCK (ALT COMMA ID)))))) (RULE functionDecl (BLOCK (ALT returnType ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT LBRACE (* (BLOCK (ALT statement))) RBRACE)))))) (RULE returnType (BLOCK (ALT 'int') (ALT 'uint8_t') (ALT 'uint32_t') (ALT 'osThreadId') (ALT 'char') (ALT 'TickType_t') (ALT 'osEvent') (ALT 'float') (ALT 'void') (ALT ID))) (RULE parameterList (BLOCK (ALT (* (BLOCK (ALT (? (BLOCK (ALT COMMA))) dataType (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT STAR))) (? (BLOCK (ALT ID))))))))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE declaration (BLOCK (ALT (? (BLOCK (ALT EXTERN))) (? (BLOCK (ALT qualifier))) dataType ID (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQUAL primary))) SEMICOLON))) (RULE dataType (BLOCK (ALT 'int') (ALT 'uint8_t') (ALT 'uint32_t') (ALT 'osThreadId') (ALT 'char') (ALT 'TickType_t') (ALT 'osEvent') (ALT 'float') (ALT ID) (ALT 'void'))) (RULE statement (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE statementTwo (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE returnStatement (BLOCK (ALT 'return' (? (BLOCK (ALT expression))) SEMICOLON))) (RULE assignment (BLOCK (ALT indexedID (BLOCK (ALT (BLOCK (ALT EQUAL expression))) (ALT assignmentType)) (? (BLOCK (ALT ID) (ALT INT))) (? (BLOCK (ALT SEMICOLON)))))) (RULE assignmentType (BLOCK (ALT PLUSPPLUS) (ALT MINUSMINUS) (ALT MINUSEQUAL) (ALT PLUSEQUAL) (ALT EQUALMINUS) (ALT EQUALPLUS))) (RULE indexedID (BLOCK (ALT ID (* (BLOCK (ALT LBRACK expression RBRACK)))))) (RULE functionCall (BLOCK (ALT ID LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (RULE argumentList (BLOCK (ALT argument (* (BLOCK (ALT COMMA argument)))))) (RULE argument (BLOCK (ALT expression) (ALT transformedArgument))) (RULE transformedArgument (BLOCK (ALT dataCastArgument) (ALT functionCallArgument))) (RULE dataCastArgument (BLOCK (ALT LPAREN dataType (? (BLOCK (ALT STAR))) RPAREN ID))) (RULE functionCallArgument (BLOCK (ALT ID LPAREN ID RPAREN))) (RULE functionCallID (BLOCK (ALT ID))) (RULE ifStatement (BLOCK (ALT IF LPAREN expression RPAREN (BLOCK (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statement))) RBRACE))) (ALT statement)) (? (BLOCK (ALT comment))) (? (BLOCK (ALT ELSE (BLOCK (ALT ifStatement) (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statementTwo))) RBRACE))) (ALT statementTwo)))))))) (RULE loopStatement (BLOCK (ALT forLoop) (ALT whileLoop))) (RULE forLoop (BLOCK (ALT FOR LPAREN (? (BLOCK (ALT VOLATILE))) dataType assignment SEMICOLON expression SEMICOLON (? (BLOCK (ALT assignment))) RPAREN (BLOCK (ALT (? (BLOCK (ALT SEMICOLON)))) (ALT (? (BLOCK (ALT (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE))))))))))) (RULE whileLoop (BLOCK (ALT WHILE LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE)))))) (RULE switchStatement (BLOCK (ALT SWITCH LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT caseBlock))) (? (BLOCK (ALT defaultBlock))) (? (BLOCK (ALT RBRACE)))))) (RULE caseBlock (BLOCK (ALT CASE expression COLON (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) BREAK (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT RBRACE)))))) (RULE defaultBlock (BLOCK (ALT DEFAULT COLON (? (BLOCK (ALT (* (BLOCK (ALT statement)))))) BREAK (? (BLOCK (ALT SEMICOLON)))))) (RULE expression (BLOCK (ALT (? (BLOCK (ALT '&'))) primary (? (BLOCK (ALT LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (* (BLOCK (ALT operator primary)))))) (RULE primary (BLOCK (ALT ID) (ALT HEX_INT) (ALT INT) (ALT STRING) (ALT CHAR) (ALT castFunctionCall) (ALT dataType) (ALT LPAREN expression RPAREN))) (RULE operator (BLOCK (ALT PLUS) (ALT MINUS) (ALT STAR) (ALT SLASH) (ALT PERCENT) (ALT LT) (ALT GT) (ALT LE) (ALT GE) (ALT EQEQ) (ALT NOTEQ) (ALT AND) (ALT OR))) (RULE castFunctionCall (BLOCK (ALT LPAREN dataType RPAREN ID LPAREN RPAREN))) (RULE printStatement (BLOCK (ALT PRINTF LPAREN (? (BLOCK (ALT STRING))) (? (BLOCK (ALT COMMA))) (? (BLOCK (ALT argument))) (? (BLOCK (ALT COMMA argumentList))) RPAREN))) (RULE comment (BLOCK (ALT SINGLE_LINE_COMMENT) (ALT MULTI_LINE_COMMENT)))))
+2025-04-11 00:40:07:882 grammar LogManager.java:25 after: (COMBINED_GRAMMAR C2Tree (@ header {
+package C2TreeTransformations;
+}) (RULES (RULE IF (BLOCK (ALT 'if'))) (RULE EXTERN (BLOCK (ALT 'extern'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE INCLUDE (BLOCK (ALT '#include'))) (RULE DEFINE (BLOCK (ALT '#define'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE VOLATILE (BLOCK (ALT 'volatile'))) (RULE ID (BLOCK (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z0-9_.])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE SINGLE_LINE_COMMENT (BLOCK (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))))) (RULE MULTI_LINE_COMMENT (BLOCK (ALT '/*' (* (BLOCK (ALT .))) '*/'))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT '\\"') (ALT (~ (SET ["]))))) '"'))) (RULE CHAR (BLOCK (ALT '\'' . '\''))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '=+'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOUBLE_QUOTE (BLOCK (ALT '"'))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE AND (BLOCK (ALT '&&'))) (RULE OR (BLOCK (ALT '||'))) (RULE file (BLOCK (ALT (* (BLOCK (ALT preprocessorDirective) (ALT includeDirective) (ALT comment) (ALT moduleDecl))) EOF))) (RULE preprocessorDirective (BLOCK (ALT DEFINE ID (? (BLOCK (ALT EQUAL))) INT (? (BLOCK (ALT SEMICOLON)))))) (RULE includeDirective (BLOCK (ALT INCLUDE (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT LT ID GT))) (RULE localInclude (BLOCK (ALT DOUBLE_QUOTE ID DOUBLE_QUOTE))) (RULE moduleDecl (BLOCK (ALT moduleItem))) (RULE moduleItem (BLOCK (ALT declaration) (ALT functionDecl) (ALT statement) (ALT enumDecl))) (RULE enumDecl (BLOCK (ALT TYPEDEF ENUM LBRACE enumList RBRACE ID SEMICOLON))) (RULE enumList (BLOCK (ALT ID (* (BLOCK (ALT COMMA ID)))))) (RULE functionDecl (BLOCK (ALT returnType ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT LBRACE (* (BLOCK (ALT statement))) RBRACE)))))) (RULE returnType (BLOCK (ALT (SET 'int' 'uint8_t' 'uint32_t' 'osThreadId' 'char' 'TickType_t' 'osEvent' 'float' 'void' ID)))) (RULE parameterList (BLOCK (ALT (* (BLOCK (ALT (? (BLOCK (ALT COMMA))) dataType (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT STAR))) (? (BLOCK (ALT ID))))))))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE declaration (BLOCK (ALT (? (BLOCK (ALT EXTERN))) (? (BLOCK (ALT qualifier))) dataType ID (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQUAL primary))) SEMICOLON))) (RULE dataType (BLOCK (ALT (SET 'int' 'uint8_t' 'uint32_t' 'osThreadId' 'char' 'TickType_t' 'osEvent' 'float' ID 'void')))) (RULE statement (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE statementTwo (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE returnStatement (BLOCK (ALT 'return' (? (BLOCK (ALT expression))) SEMICOLON))) (RULE assignment (BLOCK (ALT indexedID (BLOCK (ALT (BLOCK (ALT EQUAL expression))) (ALT assignmentType)) (? (BLOCK (ALT (SET ID INT)))) (? (BLOCK (ALT SEMICOLON)))))) (RULE assignmentType (BLOCK (ALT (SET PLUSPPLUS MINUSMINUS MINUSEQUAL PLUSEQUAL EQUALMINUS EQUALPLUS)))) (RULE indexedID (BLOCK (ALT ID (* (BLOCK (ALT LBRACK expression RBRACK)))))) (RULE functionCall (BLOCK (ALT ID LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (RULE argumentList (BLOCK (ALT argument (* (BLOCK (ALT COMMA argument)))))) (RULE argument (BLOCK (ALT expression) (ALT transformedArgument))) (RULE transformedArgument (BLOCK (ALT dataCastArgument) (ALT functionCallArgument))) (RULE dataCastArgument (BLOCK (ALT LPAREN dataType (? (BLOCK (ALT STAR))) RPAREN ID))) (RULE functionCallArgument (BLOCK (ALT ID LPAREN ID RPAREN))) (RULE functionCallID (BLOCK (ALT ID))) (RULE ifStatement (BLOCK (ALT IF LPAREN expression RPAREN (BLOCK (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statement))) RBRACE))) (ALT statement)) (? (BLOCK (ALT comment))) (? (BLOCK (ALT ELSE (BLOCK (ALT ifStatement) (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statementTwo))) RBRACE))) (ALT statementTwo)))))))) (RULE loopStatement (BLOCK (ALT forLoop) (ALT whileLoop))) (RULE forLoop (BLOCK (ALT FOR LPAREN (? (BLOCK (ALT VOLATILE))) dataType assignment SEMICOLON expression SEMICOLON (? (BLOCK (ALT assignment))) RPAREN (BLOCK (ALT (? (BLOCK (ALT SEMICOLON)))) (ALT (? (BLOCK (ALT (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE))))))))))) (RULE whileLoop (BLOCK (ALT WHILE LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE)))))) (RULE switchStatement (BLOCK (ALT SWITCH LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT caseBlock))) (? (BLOCK (ALT defaultBlock))) (? (BLOCK (ALT RBRACE)))))) (RULE caseBlock (BLOCK (ALT CASE expression COLON (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) BREAK (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT RBRACE)))))) (RULE defaultBlock (BLOCK (ALT DEFAULT COLON (? (BLOCK (ALT (* (BLOCK (ALT statement)))))) BREAK (? (BLOCK (ALT SEMICOLON)))))) (RULE expression (BLOCK (ALT (? (BLOCK (ALT '&'))) primary (? (BLOCK (ALT LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (* (BLOCK (ALT operator primary)))))) (RULE primary (BLOCK (ALT ID) (ALT HEX_INT) (ALT INT) (ALT STRING) (ALT CHAR) (ALT castFunctionCall) (ALT dataType) (ALT LPAREN expression RPAREN))) (RULE operator (BLOCK (ALT (SET PLUS MINUS STAR SLASH PERCENT LT GT LE GE EQEQ NOTEQ AND OR)))) (RULE castFunctionCall (BLOCK (ALT LPAREN dataType RPAREN ID LPAREN RPAREN))) (RULE printStatement (BLOCK (ALT PRINTF LPAREN (? (BLOCK (ALT STRING))) (? (BLOCK (ALT COMMA))) (? (BLOCK (ALT argument))) (? (BLOCK (ALT COMMA argumentList))) RPAREN))) (RULE comment (BLOCK (ALT (SET SINGLE_LINE_COMMENT MULTI_LINE_COMMENT))))))
+2025-04-11 00:40:07:919 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR C2Tree (@ header {
+package C2TreeTransformations;
+}) (RULES (RULE file (BLOCK (ALT (* (BLOCK (ALT preprocessorDirective) (ALT includeDirective) (ALT comment) (ALT moduleDecl))) EOF))) (RULE preprocessorDirective (BLOCK (ALT DEFINE ID (? (BLOCK (ALT EQUAL))) INT (? (BLOCK (ALT SEMICOLON)))))) (RULE includeDirective (BLOCK (ALT INCLUDE (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT LT ID GT))) (RULE localInclude (BLOCK (ALT DOUBLE_QUOTE ID DOUBLE_QUOTE))) (RULE moduleDecl (BLOCK (ALT moduleItem))) (RULE moduleItem (BLOCK (ALT declaration) (ALT functionDecl) (ALT statement) (ALT enumDecl))) (RULE enumDecl (BLOCK (ALT TYPEDEF ENUM LBRACE enumList RBRACE ID SEMICOLON))) (RULE enumList (BLOCK (ALT ID (* (BLOCK (ALT COMMA ID)))))) (RULE functionDecl (BLOCK (ALT returnType ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT LBRACE (* (BLOCK (ALT statement))) RBRACE)))))) (RULE returnType (BLOCK (ALT (SET 'int' 'uint8_t' 'uint32_t' 'osThreadId' 'char' 'TickType_t' 'osEvent' 'float' 'void' ID)))) (RULE parameterList (BLOCK (ALT (* (BLOCK (ALT (? (BLOCK (ALT COMMA))) dataType (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT STAR))) (? (BLOCK (ALT ID))))))))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE declaration (BLOCK (ALT (? (BLOCK (ALT EXTERN))) (? (BLOCK (ALT qualifier))) dataType ID (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQUAL primary))) SEMICOLON))) (RULE dataType (BLOCK (ALT (SET 'int' 'uint8_t' 'uint32_t' 'osThreadId' 'char' 'TickType_t' 'osEvent' 'float' ID 'void')))) (RULE statement (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE statementTwo (BLOCK (ALT (BLOCK (ALT assignment) (ALT declaration) (ALT functionCall) (ALT ifStatement) (ALT loopStatement) (ALT switchStatement) (ALT printStatement) (ALT comment) (ALT returnStatement)) (? (BLOCK (ALT SEMICOLON)))))) (RULE returnStatement (BLOCK (ALT 'return' (? (BLOCK (ALT expression))) SEMICOLON))) (RULE assignment (BLOCK (ALT indexedID (BLOCK (ALT (BLOCK (ALT EQUAL expression))) (ALT assignmentType)) (? (BLOCK (ALT (SET ID INT)))) (? (BLOCK (ALT SEMICOLON)))))) (RULE assignmentType (BLOCK (ALT (SET PLUSPPLUS MINUSMINUS MINUSEQUAL PLUSEQUAL EQUALMINUS EQUALPLUS)))) (RULE indexedID (BLOCK (ALT ID (* (BLOCK (ALT LBRACK expression RBRACK)))))) (RULE functionCall (BLOCK (ALT ID LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (RULE argumentList (BLOCK (ALT argument (* (BLOCK (ALT COMMA argument)))))) (RULE argument (BLOCK (ALT expression) (ALT transformedArgument))) (RULE transformedArgument (BLOCK (ALT dataCastArgument) (ALT functionCallArgument))) (RULE dataCastArgument (BLOCK (ALT LPAREN dataType (? (BLOCK (ALT STAR))) RPAREN ID))) (RULE functionCallArgument (BLOCK (ALT ID LPAREN ID RPAREN))) (RULE functionCallID (BLOCK (ALT ID))) (RULE ifStatement (BLOCK (ALT IF LPAREN expression RPAREN (BLOCK (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statement))) RBRACE))) (ALT statement)) (? (BLOCK (ALT comment))) (? (BLOCK (ALT ELSE (BLOCK (ALT ifStatement) (ALT (BLOCK (ALT LBRACE (+ (BLOCK (ALT statementTwo))) RBRACE))) (ALT statementTwo)))))))) (RULE loopStatement (BLOCK (ALT forLoop) (ALT whileLoop))) (RULE forLoop (BLOCK (ALT FOR LPAREN (? (BLOCK (ALT VOLATILE))) dataType assignment SEMICOLON expression SEMICOLON (? (BLOCK (ALT assignment))) RPAREN (BLOCK (ALT (? (BLOCK (ALT SEMICOLON)))) (ALT (? (BLOCK (ALT (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE))))))))))) (RULE whileLoop (BLOCK (ALT WHILE LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT statement))) (? (BLOCK (ALT RBRACE)))))) (RULE switchStatement (BLOCK (ALT SWITCH LPAREN expression RPAREN (? (BLOCK (ALT LBRACE))) (+ (BLOCK (ALT caseBlock))) (? (BLOCK (ALT defaultBlock))) (? (BLOCK (ALT RBRACE)))))) (RULE caseBlock (BLOCK (ALT CASE expression COLON (? (BLOCK (ALT LBRACE))) (* (BLOCK (ALT statement))) BREAK (? (BLOCK (ALT SEMICOLON))) (? (BLOCK (ALT RBRACE)))))) (RULE defaultBlock (BLOCK (ALT DEFAULT COLON (? (BLOCK (ALT (* (BLOCK (ALT statement)))))) BREAK (? (BLOCK (ALT SEMICOLON)))))) (RULE expression (BLOCK (ALT (? (BLOCK (ALT '&'))) primary (? (BLOCK (ALT LPAREN (? (BLOCK (ALT argumentList))) RPAREN))) (* (BLOCK (ALT operator primary)))))) (RULE primary (BLOCK (ALT ID) (ALT HEX_INT) (ALT INT) (ALT STRING) (ALT CHAR) (ALT castFunctionCall) (ALT dataType) (ALT LPAREN expression RPAREN))) (RULE operator (BLOCK (ALT (SET PLUS MINUS STAR SLASH PERCENT LT GT LE GE EQEQ NOTEQ AND OR)))) (RULE castFunctionCall (BLOCK (ALT LPAREN dataType RPAREN ID LPAREN RPAREN))) (RULE printStatement (BLOCK (ALT PRINTF LPAREN (? (BLOCK (ALT STRING))) (? (BLOCK (ALT COMMA))) (? (BLOCK (ALT argument))) (? (BLOCK (ALT COMMA argumentList))) RPAREN))) (RULE comment (BLOCK (ALT (SET SINGLE_LINE_COMMENT MULTI_LINE_COMMENT))))))
+2025-04-11 00:40:07:919 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR C2TreeLexer (@ header {
+package C2TreeTransformations;
+}) (RULES (RULE T__0 (BLOCK (ALT 'int'))) (RULE T__1 (BLOCK (ALT 'uint8_t'))) (RULE T__2 (BLOCK (ALT 'uint32_t'))) (RULE T__3 (BLOCK (ALT 'osThreadId'))) (RULE T__4 (BLOCK (ALT 'char'))) (RULE T__5 (BLOCK (ALT 'TickType_t'))) (RULE T__6 (BLOCK (ALT 'osEvent'))) (RULE T__7 (BLOCK (ALT 'float'))) (RULE T__8 (BLOCK (ALT 'void'))) (RULE T__9 (BLOCK (ALT 'const'))) (RULE T__10 (BLOCK (ALT 'return'))) (RULE T__11 (BLOCK (ALT '&'))) (RULE IF (BLOCK (ALT 'if'))) (RULE EXTERN (BLOCK (ALT 'extern'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE INCLUDE (BLOCK (ALT '#include'))) (RULE DEFINE (BLOCK (ALT '#define'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE VOLATILE (BLOCK (ALT 'volatile'))) (RULE ID (BLOCK (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z0-9_.])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE SINGLE_LINE_COMMENT (BLOCK (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))))) (RULE MULTI_LINE_COMMENT (BLOCK (ALT '/*' (* (BLOCK (ALT .))) '*/'))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT '\\"') (ALT (~ (SET ["]))))) '"'))) (RULE CHAR (BLOCK (ALT '\'' . '\''))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '=+'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOUBLE_QUOTE (BLOCK (ALT '"'))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE AND (BLOCK (ALT '&&'))) (RULE OR (BLOCK (ALT '||')))))
+2025-04-11 00:40:08:083 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:162 semantics LogManager.java:25 tokens={EOF=-1, T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, T__9=10, T__10=11, T__11=12, IF=13, EXTERN=14, ELSE=15, CASE=16, DEFAULT=17, SWITCH=18, BREAK=19, FOR=20, WHILE=21, PRINTF=22, INCLUDE=23, DEFINE=24, TYPEDEF=25, ENUM=26, VOLATILE=27, ID=28, INT=29, HEX_INT=30, WS=31, SINGLE_LINE_COMMENT=32, MULTI_LINE_COMMENT=33, STRING=34, CHAR=35, SEMICOLON=36, COLON=37, COMMA=38, DOT=39, LPAREN=40, RPAREN=41, LBRACE=42, RBRACE=43, LBRACK=44, RBRACK=45, EQUAL=46, PLUS=47, PLUSPPLUS=48, MINUS=49, MINUSMINUS=50, MINUSEQUAL=51, PLUSEQUAL=52, EQUALMINUS=53, EQUALPLUS=54, STAR=55, SLASH=56, PERCENT=57, LT=58, GT=59, LE=60, GE=61, EQEQ=62, NOTEQ=63, QUOTE=64, DOUBLE_QUOTE=65, DOLLAR=66, AND=67, OR=68}
+2025-04-11 00:40:08:162 semantics LogManager.java:25 strings={'int'=1, 'uint8_t'=2, 'uint32_t'=3, 'osThreadId'=4, 'char'=5, 'TickType_t'=6, 'osEvent'=7, 'float'=8, 'void'=9, 'const'=10, 'return'=11, '&'=12, 'if'=13, 'extern'=14, 'else'=15, 'case'=16, 'default'=17, 'switch'=18, 'break'=19, 'for'=20, 'while'=21, 'printf'=22, '#include'=23, '#define'=24, 'typedef'=25, 'enum'=26, 'volatile'=27, ';'=36, ':'=37, ','=38, '.'=39, '('=40, ')'=41, '{'=42, '}'=43, '['=44, ']'=45, '='=46, '+'=47, '++'=48, '-'=49, '--'=50, '-='=51, '+='=52, '=-'=53, '=+'=54, '*'=55, '/'=56, '%'=57, '<'=58, '>'=59, '<='=60, '>='=61, '=='=62, '!='=63, '\''=64, '"'=65, '$'=66, '&&'=67, '||'=68}
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 0 in rule file
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[24, 23, {32..33}, {1..11, 13..14, 18, 20..22, 25, 28, 32..33}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 1 in rule file
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..25, 28, 32..33}, <EOF>]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 2 in rule preprocessorDirective
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[46, 29]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 3 in rule preprocessorDirective
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..14, 18, 20..25, 28, 32..33}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 4 in rule includeDirective
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[58, 65]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 5 in rule moduleItem
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..10, 14, 28}, {1..9, 28}, {1..11, 13..14, 18, 20..22, 28, 32..33}, 25]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 6 in rule enumList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[38, 43]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 7 in rule functionDecl
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..9, 28, 38, 41}, 41]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 8 in rule functionDecl
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..14, 18, 20..25, 28, 32..33, 42}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 9 in rule functionDecl
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, 43]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 10 in rule functionDecl
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[42, {<EOF>, 1..11, 13..14, 18, 20..25, 28, 32..33}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 11 in rule parameterList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[38, {1..9, 28}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 12 in rule parameterList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[10, {1..9, 28, 38, 41, 55}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 13 in rule parameterList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[55, {1..9, 28, 38, 41}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 14 in rule parameterList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[28, {1..9, 28, 38, 41}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 15 in rule parameterList
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..9, 28, 38}, 41]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 16 in rule declaration
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[14, {1..10, 28}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 17 in rule declaration
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[10, {1..9, 28}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 18 in rule declaration
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[44, {36, 46}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 19 in rule declaration
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[46, 36]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 20 in rule statement
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[28, {1..10, 14, 28}, 28, 13, {20..21}, 18, 22, {32..33}, 11]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 21 in rule statement
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 22 in rule statementTwo
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[28, {1..10, 14, 28}, 28, 13, {20..21}, 18, 22, {32..33}, 11]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 23 in rule statementTwo
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 24 in rule returnStatement
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{1..9, 12, 28..30, 34..35, 40}, 36]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 25 in rule assignment
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[46, {48, 50..54}]
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 
+DECISION 26 in rule assignment
+2025-04-11 00:40:08:182 LL1 LogManager.java:25 look=[{28..29}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 41, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 27 in rule assignment
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 41, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 28 in rule indexedID
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[44, {46, 48, 50..54}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 29 in rule functionCall
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{1..9, 12, 28..30, 34..35, 40}, 41]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 30 in rule argumentList
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[38, 41]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 31 in rule argument
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{1..9, 12, 28..30, 34..35, 40}, {28, 40}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 32 in rule transformedArgument
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[40, 28]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 33 in rule dataCastArgument
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[55, 41]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 34 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, 43]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 35 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[42, {1..11, 13..14, 18, 20..22, 28, 32..33}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 36 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{32..33}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 37 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, 43]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 38 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[13, 42, {1..11, 13..14, 18, 20..22, 28, 32..33}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 39 in rule ifStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[15, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 40 in rule loopStatement
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[20, 21]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 41 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[27, {1..9, 28}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 42 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[28, 41]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 43 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 44 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[42, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 45 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 46 in rule forLoop
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 look=[43, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:189 LL1 LogManager.java:25 
+DECISION 47 in rule forLoop
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 42..43}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 48 in rule forLoop
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 42..43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 49 in rule whileLoop
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[42, {1..11, 13..14, 18, 20..22, 28, 32..33}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 50 in rule whileLoop
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 51 in rule whileLoop
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[43, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 52 in rule switchStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[42, 16]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 53 in rule switchStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[16, {<EOF>, 1..11, 13..15, 17..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 54 in rule switchStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[17, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 55 in rule switchStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[43, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 56 in rule caseBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[42, {1..11, 13..14, 18..22, 28, 32..33}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 57 in rule caseBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, 19]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 58 in rule caseBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 59 in rule caseBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[43, {<EOF>, 1..11, 13..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 60 in rule defaultBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..11, 13..14, 18, 20..22, 28, 32..33}, 19]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 61 in rule defaultBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..11, 13..14, 18..22, 28, 32..33}, 19]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 62 in rule defaultBlock
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[36, {<EOF>, 1..11, 13..15, 18..25, 28, 32..33, 36, 43}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 63 in rule expression
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[12, {1..9, 28..30, 34..35, 40}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 64 in rule expression
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..9, 12, 28..30, 34..35, 40}, 41]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 65 in rule expression
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[40, {<EOF>, 1..11, 13..15, 18..25, 28..29, 32..33, 36..38, 41, 43, 45, 47, 49, 55..63, 67..68}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 66 in rule expression
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{47, 49, 55..63, 67..68}, {<EOF>, 1..11, 13..15, 18..25, 28..29, 32..33, 36..38, 41, 43, 45}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 67 in rule primary
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[28, 30, 29, 34, 35, 40, {1..9, 28}, 40]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 68 in rule printStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[34, {1..9, 12, 28..30, 34..35, 38, 40..41}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 69 in rule printStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[38, {1..9, 12, 28..30, 34..35, 38, 40..41}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? false
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 70 in rule printStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[{1..9, 12, 28..30, 34..35, 40}, {38, 41}]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 
+DECISION 71 in rule printStatement
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 look=[38, 41]
+2025-04-11 00:40:08:193 LL1 LogManager.java:25 LL(1)? true
+2025-04-11 00:40:08:193 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:272 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:272 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:272 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:272 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:283 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:283 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:285 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+
+2025-04-11 00:40:08:285 action-translator LogManager.java:25 translate 
+package C2TreeTransformations;
+

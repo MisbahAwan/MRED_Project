@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'flat-1_2.dtd'>
+<nta>
+   <declaration>
+      int New_Mode_Flag123;
+      int initial_flag;
+      int Running_Mode;
+      int Set_Button;
+      int Start_Button;
+      int Standby_Button;
+      int check_flag_VCV;
+      int In_Init_Flag;
+      int In_Start_Tick;
+      int InEx_Flag;
+      int peep_observed;
+      int In_End_Tick;
+      int Ex_Init_Flag;
+      int p_plateau_flag;
+      int p_plateau_cycles;
+      int p_plateau;
+      int Exhale_Time;
+      int Inhale_Time;
+      int ExtraDelayFlag;
+      int volumeORpressureMode;
+      int Sensors_Running;
+      int check_flag_sensors;
+      longint VCVmodeHandle;
+      longint SensorsHandle;
+      byte txx[12];
+      int cmd_end[2];
+      int t3;
+      logic VCV_InRet;
+   </declaration>
+   <template>
+    <name>get_pressure</name>
+   </template>
+   <template>
+    <name>find_peep</name>
+   </template>
+   <template>
+    <name>set_flow</name>
+   </template>
+   <template>
+    <name>Suspend_All_Modes</name>
+   </template>
+   <template>
+    <name>Update_Control_Parameters</name>
+   </template>
+   <template>
+    <name>Start_VCVmode</name>
+      <location id="id0" x="0" y="0">
+      </location>
+      <location id="id1" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="guard">New_Mode_Flag==1</label>
+    </transition>
+      <location id="id2" x="0" y="0">
+      </location>
+      <location id="id3" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id2"/>
+        <target ref="id3"/>
+        <label kind="guard">initial_flag==1</label>
+    </transition>
+      <location id="id4" x="0" y="0">
+      </location>
+      <location id="id5" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id4"/>
+        <target ref="id5"/>
+        <label kind="guard">Set_Button==1</label>
+    </transition>
+      <location id="id6" x="0" y="0">
+      </location>
+      <location id="id7" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id6"/>
+        <target ref="id7"/>
+        <label kind="guard">Start_Button==1</label>
+    </transition>
+      <location id="id8" x="0" y="0">
+      </location>
+      <location id="id9" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id8"/>
+        <target ref="id9"/>
+        <label kind="guard">Standby_Button==1</label>
+    </transition>
+      <location id="id10" x="0" y="0">
+      </location>
+      <location id="id11" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id10"/>
+        <target ref="id11"/>
+        <label kind="guard">VCV_InRet.status!=osEventTimeout</label>
+    </transition>
+      <location id="id12" x="0" y="0">
+      </location>
+      <location id="id13" x="100" y="0">
+      </location>
+    <transition>
+        <source ref="id12"/>
+        <target ref="id13"/>
+        <label kind="guard">p_plateau_cycles>=50</label>
+    </transition>
+   </template>
+</nta>
+

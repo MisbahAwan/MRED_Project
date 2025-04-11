@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'flat-1_2.dtd'>
+<nta>
+   <declaration>
+    // #include &lt;stdio.h&gt; 
+    // Constants 
+    const int DESIRED_SPEED_INCREMENT = 1;    // Speed adjustment step (1 km/h) 
+    const int MAX_SPEED = 150;    // Maximum allowed speed (in km/h) 
+    const int MIN_SPEED = 30;    // Minimum allowed speed (in km/h) 
+    const int THROTTLE_MAX = 100;    // Maximum throttle value (percentage) 
+    const int THROTTLE_MIN = 0;    // Minimum throttle value (percentage) 
+    // Enum to represent the system state 
+ 	const int CRUISE_OFF = 0;
+  	const int CRUISE_ON = 1;
+  	const int CRUISE_HOLD = 2;
+     // Global Variables 
+  	int currentSpeed=0;
+    // Vehicle's current speed (km/h) 
+  	int desiredSpeed=0;
+    // The speed at which cruise control should maintain (km/h) 
+  	int throttle=0;
+    // Throttle level (0 to 100%) 
+  	int state=CRUISE_OFF;
+    // Initial state is OFF 
+    // Function to read the vehicle's current speed (mock function) 
+
+
+// Posting Declarations from all templates here:
+
+   		int speedDifference;
+   		int setButtonPressed=0;
+   		int increaseSpeed=0;
+   		int decreaseSpeed=0;
+   		int cancelButtonPressed=0;
+   </declaration>
+   <template>
+//TEMPLATE_RETURN_TYPE:int
+      <name>readCurrentSpeed</name>
+      <parameter></parameter>
+      <location id="id0" x="1500" y="10">
+      <name>Loc0</name>
+      </location>
+      <location id="id1" x="1650" y="250">
+      <name>Loc1</name>
+      </location>
+     <init ref="id0"/>
+    <!-- Simulate reading speed from a sensor --> 
+    <!-- In real embedded system, this would interface with the vehicle's speed sensor --> 
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="assignment">return=currentSpeed</label>
+    </transition>
+   </template>
+    <!-- Function to control the throttle --> 
+   <template>
+//TEMPLATE_RETURN_TYPE:void
+      <name>controlThrottle</name>
+      <parameter>int speedDifference </parameter>
+      <location id="id0" x="1500" y="10">
+      <name>Loc0</name>
+      </location>
+      <location id="id1" x="1650" y="250">
+      <name>Loc1</name>
+      </location>
+      <location id="id2" x="1800" y="10">
+      <name>Loc2</name>
+      </location>
+      <location id="id3" x="1950" y="250">
+      <name>Loc3</name>
+      </location>
+      <location id="id4" x="2100" y="10">
+      <name>Loc4</name>
+      </location>
+     <init ref="id0"/>
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="guard">speedDifference &gt;0</label>
+        <label kind="assignment">		throttle+=speedDifference
+		</label>    </transition> 
+//ELSE
+    <transition>
+        <source ref="id1"/>
+        <target ref="id2"/>
+        <label kind="guard">speedDifference &lt;0</label>
+        <label kind="assignment">		throttle+=speedDifference
+		</label>    </transition> 
+    <transition>
+        <source ref="id2"/>
+        <target ref="id3"/>
+        <label kind="guard">throttle &gt;THROTTLE_MAX</label>
+        <label kind="assignment">		throttle = THROTTLE_MAX
+		</label>    </transition> 
+    <transition>
+        <source ref="id3"/>
+        <target ref="id4"/>
+        <label kind="guard">throttle &lt;THROTTLE_MIN</label>
+        <label kind="assignment">		throttle = THROTTLE_MIN
+		</label>    </transition> 
+    <!-- printf("Throttle set to: %d%%\n", throttle); --> 
+   </template>
+    <!-- Function to update the cruise control system state --> 
+   <template>
+//TEMPLATE_RETURN_TYPE:void
+      <name>updateCruiseControl</name>
+      <parameter>int setButtonPressed , int increaseSpeed , int decreaseSpeed , int cancelButtonPressed </parameter>
+      <location id="id0" x="1500" y="10">
+      <name>Loc0</name>
+      </location>
+      <location id="id1" x="1650" y="250">
+      <name>Loc1</name>
+      </location>
+      <location id="id2" x="1800" y="10">
+      <name>Loc2</name>
+      </location>
+      <location id="id3" x="1950" y="250">
+      <name>Loc3</name>
+      </location>
+      <location id="id4" x="2100" y="10">
+      <name>Loc4</name>
+      </location>
+      <location id="id5" x="2250" y="250">
+      <name>Loc5</name>
+      </location>
+      <location id="id6" x="2400" y="10">
+      <name>Loc6</name>
+      </location>
+      <location id="id7" x="2550" y="250">
+      <name>Loc7</name>
+      </location>
+      <location id="id8" x="2700" y="10">
+      <name>Loc8</name>
+      </location>
+      <location id="id9" x="2850" y="250">
+      <name>Loc9</name>
+      </location>
+      <location id="id10" x="3000" y="10">
+      <name>Loc10</name>
+      </location>
+      <location id="id11" x="3150" y="250">
+      <name>Loc11</name>
+      </location>
+      <location id="id12" x="3300" y="10">
+      <name>Loc12</name>
+      </location>
+      <location id="id13" x="3450" y="250">
+      <name>Loc13</name>
+      </location>
+     <init ref="id0"/>
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="guard">switch== state</label>
+    </transition>
+    <transition>
+        <source ref="id1"/>
+        <target ref="id2"/>
+        <label kind="guard">state==CRUISE_OFF</label>
+    </transition>
+    <transition>
+        <source ref="id2"/>
+        <target ref="id3"/>
+        <label kind="guard">setButtonPressed &amp;&amp; currentSpeed &gt;=MIN_SPEED</label>
+        <label kind="assignment">		desiredSpeed = currentSpeed,
+		state = CRUISE_ON
+		</label>    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id3"/>
+        <target ref="id4"/>
+        <label kind="guard">state==CRUISE_ON</label>
+    </transition>
+    <transition>
+        <source ref="id4"/>
+        <target ref="id5"/>
+        <label kind="guard">cancelButtonPressed</label>
+        <label kind="assignment">		state = CRUISE_OFF,
+		throttle = 0
+		</label>    </transition> 
+//ELSE
+    <transition>
+        <source ref="id5"/>
+        <target ref="id6"/>
+        <label kind="guard">increaseSpeed</label>
+        <label kind="assignment">		desiredSpeed+=DESIRED_SPEED_INCREMENT</label>
+    </transition>
+    <transition>
+        <source ref="id6"/>
+        <target ref="id7"/>
+        <label kind="guard">desiredSpeed &gt;MAX_SPEED</label>
+        <label kind="assignment">		desiredSpeed = MAX_SPEED
+		</label>    </transition> 
+//ELSE
+    <transition>
+        <source ref="id7"/>
+        <target ref="id8"/>
+        <label kind="guard">decreaseSpeed</label>
+        <label kind="assignment">		desiredSpeed-=DESIRED_SPEED_INCREMENT</label>
+    </transition>
+    <transition>
+        <source ref="id8"/>
+        <target ref="id9"/>
+        <label kind="guard">desiredSpeed &lt;MIN_SPEED</label>
+        <label kind="assignment">		desiredSpeed = MIN_SPEED
+		</label>    </transition> 
+    <transition>
+        <source ref="id9"/>
+        <target ref="id10"/>
+        <label kind="guard"></label>
+        <label kind="assignment">		state = CRUISE_HOLD
+		</label> 
+    </transition>
+//BREAK_STATEMENT
+    <transition>
+        <source ref="id10"/>
+        <target ref="id11"/>
+        <label kind="guard">state==CRUISE_HOLD</label>
+    </transition>
+    <transition>
+        <source ref="id11"/>
+        <target ref="id12"/>
+        <label kind="guard">cancelButtonPressed</label>
+        <label kind="assignment">		state = CRUISE_OFF,
+		throttle = 0
+		</label>    </transition> 
+    <transition>
+        <source ref="id12"/>
+        <target ref="id13"/>
+        <label kind="guard"></label>
+    // Control the throttle to maintain the desired speed 
+        <label kind="assignment">		speedDifference = desiredSpeed-currentSpeed,
+		controlThrottle(speedDifference)</label>
+    </transition>
+//BREAK_STATEMENT
+//SWITCH_STATEMENT_CLOSED
+   </template>
+    // Main function (for simulation) 
+   <template>
+//TEMPLATE_RETURN_TYPE:int
+      <name>main</name>
+      <parameter></parameter>
+      <location id="id0" x="1500" y="10">
+      <name>Loc0</name>
+      </location>
+      <location id="id1" x="1650" y="250">
+      <name>Loc1</name>
+      </location>
+      <location id="id2" x="1800" y="10">
+      <name>Loc2</name>
+      </location>
+      <location id="id3" x="1950" y="250">
+      <name>Loc3</name>
+      </location>
+      <location id="id4" x="2100" y="10">
+      <name>Loc4</name>
+      </location>
+      <location id="id5" x="2250" y="250">
+      <name>Loc5</name>
+      </location>
+      <location id="id6" x="2400" y="10">
+      <name>Loc6</name>
+      </location>
+      <location id="id7" x="2550" y="250">
+      <name>Loc7</name>
+      </location>
+      <location id="id8" x="2700" y="10">
+      <name>Loc8</name>
+      </location>
+      <location id="id9" x="2850" y="250">
+      <name>Loc9</name>
+      </location>
+      <location id="id10" x="3000" y="10">
+      <name>Loc10</name>
+      </location>
+      <location id="id11" x="3150" y="250">
+      <name>Loc11</name>
+      </location>
+      <location id="id12" x="3300" y="10">
+      <name>Loc12</name>
+      </location>
+      <location id="id13" x="3450" y="250">
+      <name>Loc13</name>
+      </location>
+      <location id="id14" x="3600" y="10">
+      <name>Loc14</name>
+      </location>
+      <location id="id15" x="3750" y="250">
+      <name>Loc15</name>
+      </location>
+      <location id="id16" x="3900" y="10">
+      <name>Loc16</name>
+      </location>
+      <location id="id17" x="4050" y="250">
+      <name>Loc17</name>
+      </location>
+     <init ref="id0"/>
+    // Simulation loop (replace with actual event-driven logic in real embedded system) 
+//FOR_LOOP_OPEN
+    <transition>
+        <source ref="id0"/>
+        <target ref="id1"/>
+        <label kind="assignment">i=0</label>
+        <label kind="guard">i&lt;20</label>
+    </transition>
+    // Simulate driving conditions (mock input) 
+    <transition>
+        <source ref="id1"/>
+        <target ref="id2"/>
+        <label kind="assignment">		currentSpeed = readCurrentSpeed()</label>
+    </transition>
+
+    // Read current speed 
+    // Simulate user actions 
+    <transition>
+        <source ref="id2"/>
+        <target ref="id3"/>
+        <label kind="guard">i==2</label>
+        <label kind="assignment">		setButtonPressed = 1
+		</label>    </transition> 
+    <transition>
+        <source ref="id3"/>
+        <target ref="id4"/>
+        <label kind="guard">i==5</label>
+        <label kind="assignment">		increaseSpeed = 1
+		</label>    </transition> 
+    <transition>
+        <source ref="id4"/>
+        <target ref="id5"/>
+        <label kind="guard">i==7</label>
+        <label kind="assignment">		decreaseSpeed = 1
+		</label>    </transition> 
+    <transition>
+        <source ref="id5"/>
+        <target ref="id6"/>
+        <label kind="guard">i==12</label>
+        <label kind="assignment">		cancelButtonPressed = 1
+		</label>    </transition> 
+    // Update cruise control system 
+    <transition>
+        <source ref="id6"/>
+        <target ref="id7"/>
+        <label kind="assignment">		updateCruiseControl(setButtonPressed, increaseSpeed, decreaseSpeed, cancelButtonPressed)</label>
+    </transition>
+
+    // Reset user actions after handling 
+    <transition>
+        <source ref="id7"/>
+        <target ref="id8"/>
+        <label kind="assignment">		setButtonPressed = 0</label>
+    </transition>
+
+    <transition>
+        <source ref="id8"/>
+        <target ref="id9"/>
+        <label kind="assignment">		increaseSpeed = 0</label>
+    </transition>
+
+    <transition>
+        <source ref="id9"/>
+        <target ref="id10"/>
+        <label kind="assignment">		decreaseSpeed = 0</label>
+    </transition>
+
+    <transition>
+        <source ref="id10"/>
+        <target ref="id11"/>
+        <label kind="assignment">		cancelButtonPressed = 0</label>
+    </transition>
+
+    // Simulate a speed increase/decrease for testing purposes 
+    <transition>
+        <source ref="id11"/>
+        <target ref="id12"/>
+        <label kind="guard">i &lt;10</label>
+        <label kind="assignment">		currentSpeed+=2
+		</label>    </transition> 
+    <transition>
+        <source ref="id12"/>
+        <target ref="id13"/>
+        <label kind="guard"></label>
+        <label kind="assignment">		currentSpeed-=2
+		</label> 
+    </transition> 
+    // Simulate speed decrease 
+    // Wait for a bit (simulate time passing) 
+//FOR_LOOP_OPEN
+    <transition>
+        <source ref="id13"/>
+        <target ref="id14"/>
+        <label kind="assignment">j=0</label>
+        <label kind="guard">j&lt;1000000</label>
+    </transition>
+    <transition>
+        <source ref="id14"/>
+        <target ref="id15"/>
+        <label kind="assignment">j++</label>
+    </transition>
+    <transition>
+        <source ref="id15"/>
+        <target ref="id14"/>
+    </transition>
+//FOR_LOOP_CLOSE
+    // Simple delay loop 
+    <transition>
+        <source ref="id14"/>
+        <target ref="id16"/>
+        <label kind="assignment">i++</label>
+    </transition>
+    <transition>
+        <source ref="id16"/>
+        <target ref="id1"/>
+    </transition>
+//FOR_LOOP_CLOSE
+    <transition>
+        <source ref="id14"/>
+        <target ref="id17"/>
+        <label kind="assignment">return=0</label>
+    </transition>
+   </template>
+<system>system readCurrentSpeed,controlThrottle,updateCruiseControl,main;</system>
+<queries>
+ <query>
+	  <formula></formula>
+	  <comment></comment>
+ </query>
+</queries>
+</nta>
+

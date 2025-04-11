@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dSML:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dSML="http://www.example.org/dSML">
+  <component name="StartVCVmode" type="void">
+    <parameter name="argument" type="void" qualifier="const" pointer="*"/>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="Initial_Flag" operator="==" value="1">
+        <statement name="Expression">
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.0"/>
+          <expression operator="=" value="HAL_GetTick()" attribute="//@declaration.0/@attribute.26"/>
+        </statement>
+      </condition>
+      <condition keyword="ELSE IF" variable="Initial_Flag" operator="==" value="0">
+        <statement name="Expression">
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.0"/>
+        </statement>
+        <statement name="Conditional">
+          <condition keyword="IF" variable="Running_Mode" operator="!=" value="1">
+            <statement name="Expression">
+              <expression operator="=" value="0" attribute="//@declaration.0/@attribute.22"/>
+            </statement>
+          </condition>
+        </statement>
+      </condition>
+      <condition keyword="ELSE">
+        <statement name="Expression">
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.1"/>
+        </statement>
+      </condition>
+    </statement>
+    <statement name="Expression">
+      <expression operator="=" value="0" attribute="//@declaration.0/@attribute.0"/>
+      <expression operator="=" value="1" attribute="//@declaration.0/@attribute.0"/>
+    </statement>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="Set_Button" operator="==" value="1">
+        <statement name="Expression">
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.3"/>
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.19"/>
+        </statement>
+      </condition>
+    </statement>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="Start_Button" operator="==" value="1">
+        <statement name="Expression">
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.4"/>
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.23"/>
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.20"/>
+        </statement>
+      </condition>
+    </statement>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="Standby_Button" operator="==" value="1">
+        <statement name="Expression">
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.5"/>
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.20"/>
+        </statement>
+      </condition>
+    </statement>
+    <statement name="Expression">
+      <expression operator="=" value="check_flag_VCV+1" attribute="//@declaration.0/@attribute.6"/>
+    </statement>
+    <statement name="Expression">
+      <expression operator="=" value="0" attribute="//@declaration.0/@attribute.21"/>
+      <expression operator="=" value="1" attribute="//@declaration.0/@attribute.7"/>
+      <expression operator="=" value="1" attribute="//@declaration.0/@attribute.9"/>
+      <expression operator="=" value="HAL_GetTick()" attribute="//@declaration.0/@attribute.8"/>
+    </statement>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="VCV_InRet.status" operator="!=" value="osEventTimeout">
+        <statement name="Expression">
+          <expression operator="=" value="HAL_GetTick()" attribute="//@declaration.0/@attribute.11"/>
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.18"/>
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.18"/>
+        </statement>
+      </condition>
+    </statement>
+    <statement name="Expression">
+      <expression operator="=" value="1" attribute="//@declaration.0/@attribute.12"/>
+      <expression operator="=" value="0" attribute="//@declaration.0/@attribute.9"/>
+      <expression operator="=" value="p_plateau_cycles+1" attribute="//@declaration.0/@attribute.14"/>
+    </statement>
+    <statement name="Conditional">
+      <condition keyword="IF" variable="p_plateau_cycles" operator=">=" value="50">
+        <statement name="Expression">
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.22"/>
+          <expression operator="=" value="1" attribute="//@declaration.0/@attribute.13"/>
+          <expression operator="=" value="get_pressure()" attribute="//@declaration.0/@attribute.15"/>
+          <expression operator="=" value="'p'" attribute="//@declaration.0/@attribute.24" index="[0]"/>
+          <expression operator="=" value="'p'" attribute="//@declaration.0/@attribute.24" index="[1]"/>
+          <expression operator="=" value="'l'" attribute="//@declaration.0/@attribute.24" index="[2]"/>
+          <expression operator="=" value="'a'" attribute="//@declaration.0/@attribute.24" index="[3]"/>
+          <expression operator="=" value="'t'" attribute="//@declaration.0/@attribute.24" index="[4]"/>
+          <expression operator="=" value="'.'" attribute="//@declaration.0/@attribute.24" index="[5]"/>
+          <expression operator="=" value="'v'" attribute="//@declaration.0/@attribute.24" index="[6]"/>
+          <expression operator="=" value="'a'" attribute="//@declaration.0/@attribute.24" index="[7]"/>
+          <expression operator="=" value="'l'" attribute="//@declaration.0/@attribute.24" index="[8]"/>
+          <expression operator="=" value="'='" attribute="//@declaration.0/@attribute.24" index="[9]"/>
+          <expression operator="=" value="p_plateau/100 + '0'" attribute="//@declaration.0/@attribute.24" index="[10]"/>
+          <expression operator="=" value="(p_plateau%100)/10 + '0'" attribute="//@declaration.0/@attribute.24" index="[11]"/>
+          <expression operator="=" value="p_plateau%10 + '0'" attribute="//@declaration.0/@attribute.24" index="[12]"/>
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.14"/>
+          <expression operator="=" value="0" attribute="//@declaration.0/@attribute.13"/>
+        </statement>
+      </condition>
+    </statement>
+  </component>
+  <declaration>
+    <attribute keyword="extern" type="uint8_t" name="Initial_Flag"/>
+    <attribute keyword="extern" type="uint8_t" name="New_Mode_Flag"/>
+    <attribute keyword="extern" type="uint8_t" name="Running_Mode"/>
+    <attribute keyword="extern" type="uint8_t" name="Set_Button"/>
+    <attribute keyword="extern" type="uint8_t" name="Start_Button"/>
+    <attribute keyword="extern" type="uint8_t" name="Standby_Button"/>
+    <attribute keyword="extern" type="uint32_t" name="check_flag_VCV"/>
+    <attribute keyword="extern" type="uint8_t" name="In_Init_Flag"/>
+    <attribute keyword="extern" type="uint32_t" name="In_Start_Tick"/>
+    <attribute keyword="extern" type="uint8_t" name="InEx_Flag"/>
+    <attribute keyword="extern" type="uint32_t" name="peep_observed"/>
+    <attribute keyword="extern" type="uint32_t" name="In_End_Tick"/>
+    <attribute keyword="extern" type="uint8_t" name="Ex_Init_Flag"/>
+    <attribute keyword="extern" type="uint8_t" name="p_plateau_flag"/>
+    <attribute keyword="extern" type="uint32_t" name="p_plateau_cycles"/>
+    <attribute keyword="extern" type="uint32_t" name="p_plateau"/>
+    <attribute keyword="extern" type="uint32_t" name="Exhale_Time"/>
+    <attribute keyword="extern" type="uint32_t" name="Inhale_Time"/>
+    <attribute keyword="extern" type="uint8_t" name="ExtraDelayFlag"/>
+    <attribute keyword="extern" type="uint8_t" name="volumeORpressureMode"/>
+    <attribute keyword="extern" type="uint8_t" name="Sensors_Running"/>
+    <attribute keyword="extern" type="uint32_t" name="check_flag_sensors"/>
+    <attribute keyword="extern" type="osThreadId" name="VCVmodeHandle"/>
+    <attribute keyword="extern" type="osThreadId" name="SensorsHandle"/>
+    <attribute keyword="extern" type="char" name="txx" size="[255]"/>
+    <attribute keyword="extern" type="uint8_t" name="cmd_end" size="[3]"/>
+    <attribute keyword="extern" type="TickType_t" name="t3"/>
+    <attribute keyword="extern" type="osEvent" name="VCV_InRet"/>
+  </declaration>
+</dSML:System>

@@ -1,0 +1,126 @@
+#include <stdio.h>
+
+// Constants
+#define DESIRED_SPEED_INCREMENT 1    // Speed adjustment step (1 km/h)
+#define MAX_SPEED 150                // Maximum allowed speed (in km/h)
+#define MIN_SPEED 30                 // Minimum allowed speed (in km/h)
+#define THROTTLE_MAX 100             // Maximum throttle value (percentage)
+#define THROTTLE_MIN 0               // Minimum throttle value (percentage)
+
+// Enum to represent the system state
+typedef enum {
+    CRUISE_OFF,
+    CRUISE_ON,
+    CRUISE_HOLD
+} CruiseState;
+
+// Global Variables
+int currentSpeed = 0;       // Vehicle's current speed (km/h)
+int desiredSpeed = 0;       // The speed at which cruise control should maintain (km/h)
+int throttle = 0;           // Throttle level (0 to 100%)
+CruiseState state = CRUISE_OFF;  // Initial state is OFF
+
+// Function to read the vehicle's current speed (mock function)
+int readCurrentSpeed() {
+    // Simulate reading speed from a sensor
+    // In real embedded system, this would interface with the vehicle's speed sensor
+    return currentSpeed;
+}
+
+// Function to control the throttle
+void controlThrottle(int speedDifference) {
+    if (speedDifference > 0) {
+        throttle += speedDifference;  // Increase throttle to speed up
+    } else if (speedDifference < 0) {
+        throttle += speedDifference;  // Decrease throttle to slow down
+    }
+
+    // Clamp throttle to valid range (0% to 100%)
+    if (throttle > THROTTLE_MAX) throttle = THROTTLE_MAX;
+    if (throttle < THROTTLE_MIN) throttle = THROTTLE_MIN;
+
+    printf("Throttle set to: %d%%\n", throttle);
+}
+
+// Function to update the cruise control system state
+void updateCruiseControl(int setButtonPressed, int increaseSpeed, int decreaseSpeed, int cancelButtonPressed) {
+    int speedDifference;
+
+    switch (state) {
+        case CRUISE_OFF:
+            if (setButtonPressed && currentSpeed >= MIN_SPEED) {
+                desiredSpeed = currentSpeed;
+                state = CRUISE_ON;
+                printf("Cruise Control ON. Holding speed at %d km/h\n", desiredSpeed);
+            }
+            break;
+
+        case CRUISE_ON:
+            if (cancelButtonPressed) {
+                state = CRUISE_OFF;
+                throttle = 0;
+                printf("Cruise Control OFF\n");
+            } else if (increaseSpeed) {
+                desiredSpeed += DESIRED_SPEED_INCREMENT;
+                if (desiredSpeed > MAX_SPEED) desiredSpeed = MAX_SPEED;
+                printf("Increasing desired speed to %d km/h\n", desiredSpeed);
+            } else if (decreaseSpeed) {
+                desiredSpeed -= DESIRED_SPEED_INCREMENT;
+                if (desiredSpeed < MIN_SPEED) desiredSpeed = MIN_SPEED;
+                printf("Decreasing desired speed to %d km/h\n", desiredSpeed);
+            } else {
+                state = CRUISE_HOLD;
+            }
+            break;
+
+        case CRUISE_HOLD:
+            if (cancelButtonPressed) {
+                state = CRUISE_OFF;
+                throttle = 0;
+                printf("Cruise Control OFF\n");
+            } else {
+                // Control the throttle to maintain the desired speed
+                speedDifference = desiredSpeed - currentSpeed;
+                controlThrottle(speedDifference);
+            }
+            break;
+    }
+}
+
+// Main function (for simulation)
+int main() {
+    int setButtonPressed = 0;
+    int increaseSpeed = 0;
+    int decreaseSpeed = 0;
+    int cancelButtonPressed = 0;
+
+    // Simulation loop (replace with actual event-driven logic in real embedded system)
+    for (int i = 0; i < 20; i++) {
+        // Simulate driving conditions (mock input)
+        currentSpeed = readCurrentSpeed();  // Read current speed
+        
+        // Simulate user actions
+        if (i == 2) setButtonPressed = 1;   // Set cruise control on at the 3rd iteration
+        if (i == 5) increaseSpeed = 1;      // Increase desired speed at the 6th iteration
+        if (i == 7) decreaseSpeed = 1;      // Decrease desired speed at the 8th iteration
+        if (i == 12) cancelButtonPressed = 1; // Cancel cruise control at 13th iteration
+        
+        // Update cruise control system
+        updateCruiseControl(setButtonPressed, increaseSpeed, decreaseSpeed, cancelButtonPressed);
+        
+        // Reset user actions after handling
+        setButtonPressed = 0;
+        increaseSpeed = 0;
+        decreaseSpeed = 0;
+        cancelButtonPressed = 0;
+
+        // Simulate a speed increase/decrease for testing purposes
+        if (i < 10) currentSpeed += 2; // Simulate speed increase
+        else currentSpeed -= 2;        // Simulate speed decrease
+        
+        // Wait for a bit (simulate time passing)
+        for (volatile int j = 0; j < 1000000; j++);  // Simple delay loop
+    }
+
+    return 0;
+}

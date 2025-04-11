@@ -1,0 +1,232 @@
+2025-04-12 00:13:06:650 grammar LogManager.java:25 before: (COMBINED_GRAMMAR Tree2SystemVerilog (@ header {
+package Tree2SystemVerilogTransformation;
+}) (RULES (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE PRINT_TAG_OPEN (BLOCK (ALT '<print'))) (RULE PRINT_TAG_CLOSE (BLOCK (ALT '/>'))) (RULE PRINT_TEXT (BLOCK (ALT 'printText='))) (RULE LT (BLOCK (ALT '<') (ALT '"<"') (ALT '&lt;') (ALT '"&lt;"'))) (RULE GT (BLOCK (ALT '>') (ALT '">"') (ALT '&gt;') (ALT '"&gt;"'))) (RULE AND (BLOCK (ALT '&&') (ALT '"&&"') (ALT '&amp;&amp;') (ALT '"&amp;&amp;"'))) (RULE INCLUDE (BLOCK (ALT '"#include"'))) (RULE DEFINE (BLOCK (ALT '"#define"'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE FOR_VOLATILE (BLOCK (ALT '"for volatile"'))) (RULE FOR (BLOCK (ALT '"for"'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE EQEQ (BLOCK (ALT '"=="') (ALT '=='))) (RULE EQ (BLOCK (ALT '"="') (ALT '='))) (RULE NOTEQ (BLOCK (ALT '"!="') (ALT '!='))) (RULE PLUSPLUS (BLOCK (ALT '"++"') (ALT '++'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"') (ALT '*'))) (RULE PLUS (BLOCK (ALT '"+"') (ALT '+'))) (RULE MINUS (BLOCK (ALT '"-"') (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '"--"') (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '"-="') (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '"+="') (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '"=-"') (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '"=+"') (ALT '=+'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE ELSEIF (BLOCK (ALT 'keyword="else if"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE CONSTINT (BLOCK (ALT '"const int"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE VALUE (BLOCK (ALT 'value'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"') (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.])))))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["\\\r\n]))) (ALT '\\' .))) '"'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE system (BLOCK (ALT (* (BLOCK (ALT includeDirective) (ALT preprocessorDirective) (ALT comment) (ALT print) (ALT declaration) (ALT component))) EOF))) (RULE preprocessorDirective (BLOCK (ALT '<preprocessordirective' 'keyword=' DEFINE 'name="' ID '"' 'value="' NUMBER '"' '/>'))) (RULE includeDirective (BLOCK (ALT '<includedirective' (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT 'keyword=' INCLUDE 'name="' '&lt;' ID '>"' '/>'))) (RULE localInclude (BLOCK (ALT 'keyword=' INCLUDE 'name=' '"' ID '"' '/>'))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT enumDecl) (ALT functionprototype) (ALT comment))) DECLARATION_CLOSE))) (RULE enumDecl (BLOCK (ALT '<enum' 'enumID="' ID '">' enumList '</enum>'))) (RULE enumList (BLOCK (ALT (* (BLOCK (ALT '<enumlist' (BLOCK (ALT 'enumItem="' ID '"')) '/>')))))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (BLOCK (ALT EXTERN) (ALT '""')) DATATYPE '=' dataTypes 'name="' ID '"' (? (BLOCK (ALT SIZE '=' STRING))) (? (BLOCK (ALT SIZE '=' '""'))) (? (BLOCK (ALT INITIAL_VALUE '=' (BLOCK (ALT STRING) (ALT ID) (ALT NUMBER) (ALT '""'))))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' 'name="' ID '"' 'type=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration) (ALT return) (ALT print))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT 'name="' (BLOCK (ALT ID '"') (ALT VOID) (ALT '"'))))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (BLOCK (ALT ID) (ALT '""'))))) (? (BLOCK (ALT 'pointer' '=' (BLOCK (ALT STAR) (ALT STARR) (ALT '""'))))) '/>'))) (RULE STARR (BLOCK (ALT 'logic[31:0]'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop) (ALT statement)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE))) (ALT (BLOCK (ALT '<if' ELSEIF)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value="' (? (BLOCK (ALT ID) (ALT STRING) (ALT NUMBER))) '">'))) (? (BLOCK (ALT '>'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</if>'))) (RULE return (BLOCK (ALT '<statement' 'name="return"' 'value="' (BLOCK (ALT ID) (ALT NUMBER)) '"' '/>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value="' ID '">' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (BLOCK (ALT SWITCH_CASE) (ALT SWITCH_DEFAULT)) (? (BLOCK (ALT '>'))) (? (BLOCK (ALT (? (BLOCK (ALT 'value="' (BLOCK (ALT STRING) (ALT ID) (ALT NUMBER))))) '">'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</switchcase>'))) (RULE loop (BLOCK (ALT '<loop' 'type=' (BLOCK (ALT FOR) (ALT FOR_VOLATILE) (ALT '"' WHILE '"')) 'initial="' dataTypes expression '"' 'condition="' expression '"' 'increment="' (? (BLOCK (ALT expression))) '">' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</loop>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT ID) (ALT STRING))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (BLOCK (ALT ID) (ALT STRING) (ALT '""'))))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT PRINT_TAG_OPEN (* (BLOCK (ALT WS))) PRINT_TEXT (* (BLOCK (ALT WS))) STRING (* (BLOCK (ALT WS))) PRINT_TAG_CLOSE))) (RULE dataTypes (BLOCK (ALT UINT8_T) (ALT UINT32_T) (ALT OSTHREADID) (ALT VOID) (ALT INT) (ALT CHAR) (ALT TICKTYPE_T) (ALT OSEVENT) (ALT FLOAT) (ALT LONGINT) (ALT ID) (ALT '""') (ALT CONSTINT))) (RULE expression (BLOCK (ALT ID operator (? (BLOCK (ALT ID) (ALT NUMBER))) (? (BLOCK (ALT SEMICOLON)))))) (RULE operator (BLOCK (ALT EQEQ) (ALT LT) (ALT GT) (ALT EQ) (ALT '=') (ALT '&lt;') (ALT NOTEQ) (ALT GTEQ) (ALT LTEQ) (ALT PLUSPLUS) (ALT PLUS) (ALT MINUS) (ALT MINUSMINUS) (ALT MINUSEQUAL) (ALT PLUSEQUAL) (ALT EQUALMINUS) (ALT EQUALPLUS) (ALT AND) (ALT '""')))))
+2025-04-12 00:13:06:690 grammar LogManager.java:25 after: (COMBINED_GRAMMAR Tree2SystemVerilog (@ header {
+package Tree2SystemVerilogTransformation;
+}) (RULES (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE PRINT_TAG_OPEN (BLOCK (ALT '<print'))) (RULE PRINT_TAG_CLOSE (BLOCK (ALT '/>'))) (RULE PRINT_TEXT (BLOCK (ALT 'printText='))) (RULE LT (BLOCK (ALT '<') (ALT '"<"') (ALT '&lt;') (ALT '"&lt;"'))) (RULE GT (BLOCK (ALT '>') (ALT '">"') (ALT '&gt;') (ALT '"&gt;"'))) (RULE AND (BLOCK (ALT '&&') (ALT '"&&"') (ALT '&amp;&amp;') (ALT '"&amp;&amp;"'))) (RULE INCLUDE (BLOCK (ALT '"#include"'))) (RULE DEFINE (BLOCK (ALT '"#define"'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE FOR_VOLATILE (BLOCK (ALT '"for volatile"'))) (RULE FOR (BLOCK (ALT '"for"'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE EQEQ (BLOCK (ALT '"=="') (ALT '=='))) (RULE EQ (BLOCK (ALT '"="') (ALT '='))) (RULE NOTEQ (BLOCK (ALT '"!="') (ALT '!='))) (RULE PLUSPLUS (BLOCK (ALT '"++"') (ALT '++'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"') (ALT '*'))) (RULE PLUS (BLOCK (ALT '"+"') (ALT '+'))) (RULE MINUS (BLOCK (ALT '"-"') (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '"--"') (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '"-="') (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '"+="') (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '"=-"') (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '"=+"') (ALT '=+'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE ELSEIF (BLOCK (ALT 'keyword="else if"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE CONSTINT (BLOCK (ALT '"const int"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE VALUE (BLOCK (ALT 'value'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"') (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.])))))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["\\\r\n]))) (ALT '\\' .))) '"'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE system (BLOCK (ALT (* (BLOCK (ALT includeDirective) (ALT preprocessorDirective) (ALT comment) (ALT print) (ALT declaration) (ALT component))) EOF))) (RULE preprocessorDirective (BLOCK (ALT '<preprocessordirective' 'keyword=' DEFINE 'name="' ID '"' 'value="' NUMBER '"' '/>'))) (RULE includeDirective (BLOCK (ALT '<includedirective' (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT 'keyword=' INCLUDE 'name="' '&lt;' ID '>"' '/>'))) (RULE localInclude (BLOCK (ALT 'keyword=' INCLUDE 'name=' '"' ID '"' '/>'))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT enumDecl) (ALT functionprototype) (ALT comment))) DECLARATION_CLOSE))) (RULE enumDecl (BLOCK (ALT '<enum' 'enumID="' ID '">' enumList '</enum>'))) (RULE enumList (BLOCK (ALT (* (BLOCK (ALT '<enumlist' (BLOCK (ALT 'enumItem="' ID '"')) '/>')))))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (SET EXTERN '""') DATATYPE '=' dataTypes 'name="' ID '"' (? (BLOCK (ALT SIZE '=' STRING))) (? (BLOCK (ALT SIZE '=' '""'))) (? (BLOCK (ALT INITIAL_VALUE '=' (SET STRING ID NUMBER '""')))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' 'name="' ID '"' 'type=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration) (ALT return) (ALT print))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT 'name="' (BLOCK (ALT ID '"') (ALT VOID) (ALT '"'))))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (SET ID '""')))) (? (BLOCK (ALT 'pointer' '=' (SET STAR STARR '""')))) '/>'))) (RULE STARR (BLOCK (ALT 'logic[31:0]'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop) (ALT statement)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE))) (ALT (BLOCK (ALT '<if' ELSEIF)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value="' (? (BLOCK (ALT (SET ID STRING NUMBER)))) '">'))) (? (BLOCK (ALT '>'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</if>'))) (RULE return (BLOCK (ALT '<statement' 'name="return"' 'value="' (SET ID NUMBER) '"' '/>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value="' ID '">' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (SET SWITCH_CASE SWITCH_DEFAULT) (? (BLOCK (ALT '>'))) (? (BLOCK (ALT (? (BLOCK (ALT 'value="' (SET STRING ID NUMBER)))) '">'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</switchcase>'))) (RULE loop (BLOCK (ALT '<loop' 'type=' (BLOCK (ALT FOR) (ALT FOR_VOLATILE) (ALT '"' WHILE '"')) 'initial="' dataTypes expression '"' 'condition="' expression '"' 'increment="' (? (BLOCK (ALT expression))) '">' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</loop>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT (SET ID STRING)))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (SET ID STRING '""')))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT PRINT_TAG_OPEN (* (BLOCK (ALT WS))) PRINT_TEXT (* (BLOCK (ALT WS))) STRING (* (BLOCK (ALT WS))) PRINT_TAG_CLOSE))) (RULE dataTypes (BLOCK (ALT (SET UINT8_T UINT32_T OSTHREADID VOID INT CHAR TICKTYPE_T OSEVENT FLOAT LONGINT ID '""' CONSTINT)))) (RULE expression (BLOCK (ALT ID operator (? (BLOCK (ALT (SET ID NUMBER)))) (? (BLOCK (ALT SEMICOLON)))))) (RULE operator (BLOCK (ALT (SET EQEQ LT GT EQ '=' '&lt;' NOTEQ GTEQ LTEQ PLUSPLUS PLUS MINUS MINUSMINUS MINUSEQUAL PLUSEQUAL EQUALMINUS EQUALPLUS AND '""'))))))
+2025-04-12 00:13:06:723 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR Tree2SystemVerilog (@ header {
+package Tree2SystemVerilogTransformation;
+}) (RULES (RULE system (BLOCK (ALT (* (BLOCK (ALT includeDirective) (ALT preprocessorDirective) (ALT comment) (ALT print) (ALT declaration) (ALT component))) EOF))) (RULE preprocessorDirective (BLOCK (ALT '<preprocessordirective' 'keyword=' DEFINE 'name="' ID '"' 'value="' NUMBER '"' '/>'))) (RULE includeDirective (BLOCK (ALT '<includedirective' (BLOCK (ALT systemInclude) (ALT localInclude))))) (RULE systemInclude (BLOCK (ALT 'keyword=' INCLUDE 'name="' '&lt;' ID '>"' '/>'))) (RULE localInclude (BLOCK (ALT 'keyword=' INCLUDE 'name=' '"' ID '"' '/>'))) (RULE declaration (BLOCK (ALT DECLARATION_OPEN (* (BLOCK (ALT attribute) (ALT enumDecl) (ALT functionprototype) (ALT comment))) DECLARATION_CLOSE))) (RULE enumDecl (BLOCK (ALT '<enum' 'enumID="' ID '">' enumList '</enum>'))) (RULE enumList (BLOCK (ALT (* (BLOCK (ALT '<enumlist' (BLOCK (ALT 'enumItem="' ID '"')) '/>')))))) (RULE attribute (BLOCK (ALT '<attribute' ISGLOBAL '=' (SET EXTERN '""') DATATYPE '=' dataTypes 'name="' ID '"' (? (BLOCK (ALT SIZE '=' STRING))) (? (BLOCK (ALT SIZE '=' '""'))) (? (BLOCK (ALT INITIAL_VALUE '=' (SET STRING ID NUMBER '""')))) '/>'))) (RULE functionprototype (BLOCK (ALT '<functionprototype' 'returnType=' dataTypes 'functionName=' ID '>' (* (BLOCK (ALT parameter))) '</functionprototype>'))) (RULE component (BLOCK (ALT '<component' 'name="' ID '"' 'type=' dataTypes '>' (* (BLOCK (ALT parameter))) (* (BLOCK (ALT comment) (ALT statement) (ALT declaration) (ALT return) (ALT print))) '</component>'))) (RULE parameter (BLOCK (ALT '<parameter' (? (BLOCK (ALT 'name="' (BLOCK (ALT ID '"') (ALT VOID) (ALT '"'))))) (? (BLOCK (ALT DATATYPE '=' dataTypes))) (? (BLOCK (ALT 'qualifier' '=' (SET ID '""')))) (? (BLOCK (ALT 'pointer' '=' (SET STAR STARR '""')))) '/>'))) (RULE statement (BLOCK (ALT '<statement>' (BLOCK (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop) (ALT statement)) '</statement>'))) (RULE ifstatement (BLOCK (ALT (BLOCK (ALT (BLOCK (ALT '<if' IF))) (ALT (BLOCK (ALT '<if' ELSE))) (ALT (BLOCK (ALT '<if' ELSEIF)))) (? (BLOCK (ALT 'variable=' ID 'operator=' (? (BLOCK (ALT operator))) 'value="' (? (BLOCK (ALT (SET ID STRING NUMBER)))) '">'))) (? (BLOCK (ALT '>'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</if>'))) (RULE return (BLOCK (ALT '<statement' 'name="return"' 'value="' (SET ID NUMBER) '"' '/>'))) (RULE switch (BLOCK (ALT '<switch' 'keyword="switch"' 'value="' ID '">' (+ (BLOCK (ALT switch_case))) '</switch>'))) (RULE switch_case (BLOCK (ALT '<switchcase' (SET SWITCH_CASE SWITCH_DEFAULT) (? (BLOCK (ALT '>'))) (? (BLOCK (ALT (? (BLOCK (ALT 'value="' (SET STRING ID NUMBER)))) '">'))) (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</switchcase>'))) (RULE loop (BLOCK (ALT '<loop' 'type=' (BLOCK (ALT FOR) (ALT FOR_VOLATILE) (ALT '"' WHILE '"')) 'initial="' dataTypes expression '"' 'condition="' expression '"' 'increment="' (? (BLOCK (ALT expression))) '">' (* (BLOCK (ALT statement) (ALT ifstatement) (ALT assignment) (ALT functioncall) (ALT comment) (ALT declaration) (ALT print) (ALT switch) (ALT return) (ALT loop))) '</loop>'))) (RULE assignment (BLOCK (ALT '<assignment' 'leftAttribute=' (? (BLOCK (ALT leftAttribute))) 'operator=' (? (BLOCK (ALT operatorOrEmpty))) 'AssignedSide=' (? (BLOCK (ALT assignedSide))) '/>'))) (RULE leftAttribute (BLOCK (ALT (SET ID STRING)))) (RULE operatorOrEmpty (BLOCK (ALT operator) (ALT '""'))) (RULE assignedSide (BLOCK (ALT ID) (ALT STRING) (ALT operator) (ALT '""'))) (RULE functioncall (BLOCK (ALT '<functioncall' 'functionName=' ID (? (BLOCK (ALT 'parameterString=' (SET ID STRING '""')))) '/>'))) (RULE comment (BLOCK (ALT '<comment' 'commentText=' STRING '/>'))) (RULE print (BLOCK (ALT PRINT_TAG_OPEN (* (BLOCK (ALT WS))) PRINT_TEXT (* (BLOCK (ALT WS))) STRING (* (BLOCK (ALT WS))) PRINT_TAG_CLOSE))) (RULE dataTypes (BLOCK (ALT (SET UINT8_T UINT32_T OSTHREADID VOID INT CHAR TICKTYPE_T OSEVENT FLOAT LONGINT ID '""' CONSTINT)))) (RULE expression (BLOCK (ALT ID operator (? (BLOCK (ALT (SET ID NUMBER)))) (? (BLOCK (ALT SEMICOLON)))))) (RULE operator (BLOCK (ALT (SET EQEQ LT GT EQ '=' '&lt;' NOTEQ GTEQ LTEQ PLUSPLUS PLUS MINUS MINUSMINUS MINUSEQUAL PLUSEQUAL EQUALMINUS EQUALPLUS AND '""'))))))
+2025-04-12 00:13:06:723 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR Tree2SystemVerilogLexer (@ header {
+package Tree2SystemVerilogTransformation;
+}) (RULES (RULE T__0 (BLOCK (ALT '<preprocessordirective'))) (RULE T__1 (BLOCK (ALT 'keyword='))) (RULE T__2 (BLOCK (ALT 'name="'))) (RULE T__3 (BLOCK (ALT '"'))) (RULE T__4 (BLOCK (ALT 'value="'))) (RULE T__5 (BLOCK (ALT '<includedirective'))) (RULE T__6 (BLOCK (ALT '&lt;'))) (RULE T__7 (BLOCK (ALT '>"'))) (RULE T__8 (BLOCK (ALT 'name='))) (RULE T__9 (BLOCK (ALT '<enum'))) (RULE T__10 (BLOCK (ALT 'enumID="'))) (RULE T__11 (BLOCK (ALT '">'))) (RULE T__12 (BLOCK (ALT '</enum>'))) (RULE T__13 (BLOCK (ALT '<enumlist'))) (RULE T__14 (BLOCK (ALT 'enumItem="'))) (RULE T__15 (BLOCK (ALT '<attribute'))) (RULE T__16 (BLOCK (ALT '='))) (RULE T__17 (BLOCK (ALT '""'))) (RULE T__18 (BLOCK (ALT '<functionprototype'))) (RULE T__19 (BLOCK (ALT 'returnType='))) (RULE T__20 (BLOCK (ALT 'functionName='))) (RULE T__21 (BLOCK (ALT '>'))) (RULE T__22 (BLOCK (ALT '</functionprototype>'))) (RULE T__23 (BLOCK (ALT '<component'))) (RULE T__24 (BLOCK (ALT 'type='))) (RULE T__25 (BLOCK (ALT '</component>'))) (RULE T__26 (BLOCK (ALT '<parameter'))) (RULE T__27 (BLOCK (ALT 'qualifier'))) (RULE T__28 (BLOCK (ALT 'pointer'))) (RULE T__29 (BLOCK (ALT '<statement>'))) (RULE T__30 (BLOCK (ALT '</statement>'))) (RULE T__31 (BLOCK (ALT '<if'))) (RULE T__32 (BLOCK (ALT 'variable='))) (RULE T__33 (BLOCK (ALT 'operator='))) (RULE T__34 (BLOCK (ALT '</if>'))) (RULE T__35 (BLOCK (ALT '<statement'))) (RULE T__36 (BLOCK (ALT 'name="return"'))) (RULE T__37 (BLOCK (ALT '<switch'))) (RULE T__38 (BLOCK (ALT 'keyword="switch"'))) (RULE T__39 (BLOCK (ALT '</switch>'))) (RULE T__40 (BLOCK (ALT '<switchcase'))) (RULE T__41 (BLOCK (ALT '</switchcase>'))) (RULE T__42 (BLOCK (ALT '<loop'))) (RULE T__43 (BLOCK (ALT 'initial="'))) (RULE T__44 (BLOCK (ALT 'condition="'))) (RULE T__45 (BLOCK (ALT 'increment="'))) (RULE T__46 (BLOCK (ALT '</loop>'))) (RULE T__47 (BLOCK (ALT '<assignment'))) (RULE T__48 (BLOCK (ALT 'leftAttribute='))) (RULE T__49 (BLOCK (ALT 'AssignedSide='))) (RULE T__50 (BLOCK (ALT '<functioncall'))) (RULE T__51 (BLOCK (ALT 'parameterString='))) (RULE T__52 (BLOCK (ALT '<comment'))) (RULE T__53 (BLOCK (ALT 'commentText='))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE PRINT_TAG_OPEN (BLOCK (ALT '<print'))) (RULE PRINT_TAG_CLOSE (BLOCK (ALT '/>'))) (RULE PRINT_TEXT (BLOCK (ALT 'printText='))) (RULE LT (BLOCK (ALT '<') (ALT '"<"') (ALT '&lt;') (ALT '"&lt;"'))) (RULE GT (BLOCK (ALT '>') (ALT '">"') (ALT '&gt;') (ALT '"&gt;"'))) (RULE AND (BLOCK (ALT '&&') (ALT '"&&"') (ALT '&amp;&amp;') (ALT '"&amp;&amp;"'))) (RULE INCLUDE (BLOCK (ALT '"#include"'))) (RULE DEFINE (BLOCK (ALT '"#define"'))) (RULE TYPEDEF (BLOCK (ALT 'typedef'))) (RULE ENUM (BLOCK (ALT 'enum'))) (RULE FOR_VOLATILE (BLOCK (ALT '"for volatile"'))) (RULE FOR (BLOCK (ALT '"for"'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE EQEQ (BLOCK (ALT '"=="') (ALT '=='))) (RULE EQ (BLOCK (ALT '"="') (ALT '='))) (RULE NOTEQ (BLOCK (ALT '"!="') (ALT '!='))) (RULE PLUSPLUS (BLOCK (ALT '"++"') (ALT '++'))) (RULE GTEQ (BLOCK (ALT '">="') (ALT '"&gt;="'))) (RULE LTEQ (BLOCK (ALT '"<="') (ALT '"&lt;="'))) (RULE STAR (BLOCK (ALT '"*"') (ALT '*'))) (RULE PLUS (BLOCK (ALT '"+"') (ALT '+'))) (RULE MINUS (BLOCK (ALT '"-"') (ALT '-'))) (RULE MINUSMINUS (BLOCK (ALT '"--"') (ALT '--'))) (RULE MINUSEQUAL (BLOCK (ALT '"-="') (ALT '-='))) (RULE PLUSEQUAL (BLOCK (ALT '"+="') (ALT '+='))) (RULE EQUALMINUS (BLOCK (ALT '"=-"') (ALT '=-'))) (RULE EQUALPLUS (BLOCK (ALT '"=+"') (ALT '=+'))) (RULE IF (BLOCK (ALT 'keyword="if"'))) (RULE ELSE (BLOCK (ALT 'keyword="else"'))) (RULE ELSEIF (BLOCK (ALT 'keyword="else if"'))) (RULE SWITCH_CASE (BLOCK (ALT 'keyword="case"'))) (RULE SWITCH_DEFAULT (BLOCK (ALT 'keyword="default"'))) (RULE VOID (BLOCK (ALT '"void"'))) (RULE EXTERN (BLOCK (ALT '"extern"'))) (RULE UINT8_T (BLOCK (ALT '"uint8_t"'))) (RULE UINT32_T (BLOCK (ALT '"uint32_t"'))) (RULE OSTHREADID (BLOCK (ALT '"osThreadId"'))) (RULE INT (BLOCK (ALT '"int"'))) (RULE CHAR (BLOCK (ALT '"char"'))) (RULE TICKTYPE_T (BLOCK (ALT '"TickType_t"'))) (RULE OSEVENT (BLOCK (ALT '"osEvent"'))) (RULE FLOAT (BLOCK (ALT '"float"'))) (RULE LONGINT (BLOCK (ALT '"longint"'))) (RULE CONSTINT (BLOCK (ALT '"const int"'))) (RULE FUNCTION_CALL (BLOCK (ALT 'functioncall'))) (RULE COMMENT (BLOCK (ALT 'comment'))) (RULE STATEMENT (BLOCK (ALT 'statement'))) (RULE COMPONENT (BLOCK (ALT 'component'))) (RULE PARAMETER (BLOCK (ALT 'parameter'))) (RULE SWITCH_CASE_TAG (BLOCK (ALT 'switchcase'))) (RULE DECLARATION_OPEN (BLOCK (ALT '<declaration>'))) (RULE DECLARATION_CLOSE (BLOCK (ALT '</declaration>'))) (RULE ISGLOBAL (BLOCK (ALT 'isGlobal'))) (RULE DATATYPE (BLOCK (ALT 'dataType'))) (RULE NAME (BLOCK (ALT 'name'))) (RULE VALUE (BLOCK (ALT 'value'))) (RULE SIZE (BLOCK (ALT 'size'))) (RULE INITIAL_VALUE (BLOCK (ALT 'initialValue'))) (RULE ID (BLOCK (ALT '""') (ALT '"' [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.]))) '"') (ALT [a-zA-Z_.] (* (BLOCK (ALT [a-zA-Z_0-9.])))))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["\\\r\n]))) (ALT '\\' .))) '"'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE END_TAG (BLOCK (LEXER_ALT_ACTION (ALT '</dSML:System>') skip))) (RULE PRINTF (BLOCK (ALT 'printf'))) (RULE DISPLAY (BLOCK (ALT '$display'))) (RULE STARR (BLOCK (ALT 'logic[31:0]')))))
+2025-04-12 00:13:06:880 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:06:976 semantics LogManager.java:25 tokens={EOF=-1, T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, T__38=39, T__39=40, T__40=41, T__41=42, T__42=43, T__43=44, T__44=45, T__45=46, T__46=47, T__47=48, T__48=49, T__49=50, T__50=51, T__51=52, T__52=53, T__53=54, WS=55, PRINT_TAG_OPEN=56, PRINT_TAG_CLOSE=57, PRINT_TEXT=58, LT=59, GT=60, AND=61, INCLUDE=62, DEFINE=63, TYPEDEF=64, ENUM=65, FOR_VOLATILE=66, FOR=67, WHILE=68, EQEQ=69, EQ=70, NOTEQ=71, PLUSPLUS=72, GTEQ=73, LTEQ=74, STAR=75, PLUS=76, MINUS=77, MINUSMINUS=78, MINUSEQUAL=79, PLUSEQUAL=80, EQUALMINUS=81, EQUALPLUS=82, IF=83, ELSE=84, ELSEIF=85, SWITCH_CASE=86, SWITCH_DEFAULT=87, VOID=88, EXTERN=89, UINT8_T=90, UINT32_T=91, OSTHREADID=92, INT=93, CHAR=94, TICKTYPE_T=95, OSEVENT=96, FLOAT=97, LONGINT=98, CONSTINT=99, FUNCTION_CALL=100, COMMENT=101, STATEMENT=102, COMPONENT=103, PARAMETER=104, SWITCH_CASE_TAG=105, DECLARATION_OPEN=106, DECLARATION_CLOSE=107, ISGLOBAL=108, DATATYPE=109, NAME=110, VALUE=111, SIZE=112, INITIAL_VALUE=113, ID=114, NUMBER=115, STRING=116, SLASH=117, LBRACE=118, RBRACE=119, LPAREN=120, RPAREN=121, SEMICOLON=122, END_TAG=123, PRINTF=124, DISPLAY=125, STARR=126}
+2025-04-12 00:13:06:976 semantics LogManager.java:25 strings={'<preprocessordirective'=1, 'keyword='=2, 'name="'=3, '"'=4, 'value="'=5, '<includedirective'=6, '&lt;'=7, '>"'=8, 'name='=9, '<enum'=10, 'enumID="'=11, '">'=12, '</enum>'=13, '<enumlist'=14, 'enumItem="'=15, '<attribute'=16, '='=17, '""'=18, '<functionprototype'=19, 'returnType='=20, 'functionName='=21, '>'=22, '</functionprototype>'=23, '<component'=24, 'type='=25, '</component>'=26, '<parameter'=27, 'qualifier'=28, 'pointer'=29, '<statement>'=30, '</statement>'=31, '<if'=32, 'variable='=33, 'operator='=34, '</if>'=35, '<statement'=36, 'name="return"'=37, '<switch'=38, 'keyword="switch"'=39, '</switch>'=40, '<switchcase'=41, '</switchcase>'=42, '<loop'=43, 'initial="'=44, 'condition="'=45, 'increment="'=46, '</loop>'=47, '<assignment'=48, 'leftAttribute='=49, 'AssignedSide='=50, '<functioncall'=51, 'parameterString='=52, '<comment'=53, 'commentText='=54, '<print'=56, '/>'=57, 'printText='=58, '"#include"'=62, '"#define"'=63, 'typedef'=64, 'enum'=65, '"for volatile"'=66, '"for"'=67, 'while'=68, 'keyword="if"'=83, 'keyword="else"'=84, 'keyword="else if"'=85, 'keyword="case"'=86, 'keyword="default"'=87, '"void"'=88, '"extern"'=89, '"uint8_t"'=90, '"uint32_t"'=91, '"osThreadId"'=92, '"int"'=93, '"char"'=94, '"TickType_t"'=95, '"osEvent"'=96, '"float"'=97, '"longint"'=98, '"const int"'=99, 'functioncall'=100, 'comment'=101, 'statement'=102, 'component'=103, 'parameter'=104, 'switchcase'=105, '<declaration>'=106, '</declaration>'=107, 'isGlobal'=108, 'dataType'=109, 'name'=110, 'value'=111, 'size'=112, 'initialValue'=113, '/'=117, '{'=118, '}'=119, '('=120, ')'=121, ';'=122, '</dSML:System>'=123, 'printf'=124, '$display'=125, 'logic[31:0]'=126}
+2025-04-12 00:13:06:980 LL1 LogManager.java:25 
+DECISION 0 in rule system
+2025-04-12 00:13:06:980 LL1 LogManager.java:25 look=[6, 1, 53, 56, 106, 24]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 1 in rule system
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{1, 6, 24, 53, 56, 106}, <EOF>]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 2 in rule includeDirective
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[2, 2]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? false
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 3 in rule declaration
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[16, 10, 19, 53]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 4 in rule declaration
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{10, 16, 19, 53}, 107]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 5 in rule enumList
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[14, 13]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 6 in rule attribute
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[112, {57, 112..113}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? false
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 7 in rule attribute
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[112, {57, 113}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 8 in rule attribute
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[113, 57]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 9 in rule functionprototype
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[27, 23]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 10 in rule component
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[27, {26, 30, 36, 53, 56, 106}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 11 in rule component
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[53, 30, 106, 36, 56]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 12 in rule component
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{30, 36, 53, 56, 106}, 26]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 13 in rule parameter
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[114, 88, 4]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 14 in rule parameter
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[3, {28..29, 57, 109}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 15 in rule parameter
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[109, {28..29, 57}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 16 in rule parameter
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[28, {29, 57}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 17 in rule parameter
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[29, 57]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 18 in rule statement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[32, 48, 51, 53, 106, 56, 38, 36, 43, 30]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 19 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[32, 32, 32]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? false
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 20 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{7, 17..18, 59..61, 69..74, 76..82}, 5]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 21 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{114..116}, 12]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 22 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[33, {22, 30, 32, 35..36, 38, 43, 48, 51, 53, 56, 106}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 23 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[22, {30, 32, 35..36, 38, 43, 48, 51, 53, 56, 106}]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 24 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[30, 32, 48, 51, 53, 106, 56, 38, 36, 43]
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 
+DECISION 25 in rule ifstatement
+2025-04-12 00:13:06:990 LL1 LogManager.java:25 look=[{30, 32, 36, 38, 43, 48, 51, 53, 56, 106}, 35]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 26 in rule switch
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[41, 40]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 27 in rule switch_case
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[22, {5, 12, 30, 32, 36, 38, 42..43, 48, 51, 53, 56, 106}]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 28 in rule switch_case
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[5, 12]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 29 in rule switch_case
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{5, 12}, {30, 32, 36, 38, 42..43, 48, 51, 53, 56, 106}]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 30 in rule switch_case
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[30, 32, 48, 51, 53, 106, 56, 38, 36, 43]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 31 in rule switch_case
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{30, 32, 36, 38, 43, 48, 51, 53, 56, 106}, 42]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 32 in rule loop
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[67, 66, 4]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 33 in rule loop
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[114, 12]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 34 in rule loop
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[30, 32, 48, 51, 53, 106, 56, 38, 36, 43]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 35 in rule loop
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{30, 32, 36, 38, 43, 48, 51, 53, 56, 106}, 47]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 36 in rule assignment
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{114, 116}, 34]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 37 in rule assignment
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{7, 17..18, 59..61, 69..74, 76..82}, 50]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 38 in rule assignment
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{7, 17..18, 59..61, 69..74, 76..82, 114, 116}, 57]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 39 in rule operatorOrEmpty
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{7, 17..18, 59..61, 69..74, 76..82}, 18]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? false
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 40 in rule assignedSide
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[114, 116, {7, 17..18, 59..61, 69..74, 76..82}, 18]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? false
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 41 in rule functioncall
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[52, 57]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 42 in rule print
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[55, 58]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 43 in rule print
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[55, 116]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 44 in rule print
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[55, 57]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 45 in rule expression
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[{114..115}, {4, 12, 122}]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 
+DECISION 46 in rule expression
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 look=[122, {4, 12}]
+2025-04-12 00:13:06:992 LL1 LogManager.java:25 LL(1)? true
+2025-04-12 00:13:06:992 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:060 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:060 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:065 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:065 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:067 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:067 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:070 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+
+2025-04-12 00:13:07:070 action-translator LogManager.java:25 translate 
+package Tree2SystemVerilogTransformation;
+

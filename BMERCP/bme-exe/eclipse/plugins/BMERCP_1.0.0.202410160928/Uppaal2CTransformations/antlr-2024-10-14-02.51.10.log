@@ -1,0 +1,212 @@
+2024-10-14 02:51:09:997 grammar LogManager.java:25 before: (COMBINED_GRAMMAR Uppaal2C (@ header {
+package SVUppaal2CTransformations;
+}) (RULES (RULE ARRAY_SV (BLOCK (ALT ':0'))) (RULE VOID (BLOCK (ALT 'void'))) (RULE DATATYPE (BLOCK (ALT 'int') (ALT 'double') (ALT 'char'))) (RULE ID (BLOCK (ALT [a-zA-Z_.:] (* (BLOCK (ALT [a-zA-Z0-9_.:])))))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE OPEN_DECLARATION (BLOCK (ALT '<declaration>'))) (RULE OPEN_TEMPLATE (BLOCK (ALT '<template>'))) (RULE OPEN_TEMPLATE_NAME (BLOCK (ALT '<name>'))) (RULE CLOSE_TEMPLATE_NAME (BLOCK (ALT '</name>'))) (RULE OPEN_PARAMETER (BLOCK (ALT '<parameter>'))) (RULE CLOSE_PARAMETER (BLOCK (ALT '</parameter>'))) (RULE OPEN_LOCATION (BLOCK (ALT '<location'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE CLOSE_LOCATION (BLOCK (ALT '</location>'))) (RULE INIT (BLOCK (ALT '<init ref="id0"/>'))) (RULE UPPAAL_COMMENT_WITH_TEXT (BLOCK (ALT '<!--' (* (BLOCK (ALT (~ (SET [<>]))))) '-->'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE NTA_OPEN (BLOCK (ALT '<nta>'))) (RULE NTA_CLOSE (BLOCK (ALT '</nta>'))) (RULE CLOSE_DECLARATION (BLOCK (ALT '</declaration>'))) (RULE CLOSE_SOURCE_TARGET (BLOCK (ALT '/>'))) (RULE CLOSE_TEMPLATE (BLOCK (ALT '</template>'))) (RULE OPEN_SYSTEM (BLOCK (ALT '<system>'))) (RULE CLOSE_SYSTEM (BLOCK (ALT '</system>'))) (RULE OPEN_QUERIES (BLOCK (ALT '<queries>'))) (RULE CLOSE_QUERIES (BLOCK (ALT '</queries>'))) (RULE OPEN_TRANSITION (BLOCK (ALT '<transition>'))) (RULE CLOSE_TRANSITION (BLOCK (ALT '</transition>'))) (RULE OPEN_LABEL (BLOCK (ALT '<label'))) (RULE CLOSE_LABEL (BLOCK (ALT '</label>'))) (RULE OPEN_SOURCE (BLOCK (ALT '<source ref='))) (RULE OPEN_TARGET (BLOCK (ALT '<target ref='))) (RULE OPEN_QUERY (BLOCK (ALT '<query>'))) (RULE CLOSE_QUERY (BLOCK (ALT '</query>'))) (RULE OPEN_FORMULA (BLOCK (ALT '<formula>'))) (RULE CLOSE_FORMULA (BLOCK (ALT '</formula>'))) (RULE OPEN_COMMENT (BLOCK (ALT '<comment>'))) (RULE CLOSE_COMMENT (BLOCK (ALT '</comment>'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE file (BLOCK (ALT (BLOCK (ALT ntaSection)) EOF))) (RULE ntaSection (BLOCK (ALT NTA_OPEN (+ (BLOCK (ALT ntaItem))) NTA_CLOSE))) (RULE ntaItem (BLOCK (ALT (+ (BLOCK (ALT declaration)))) (ALT (+ (BLOCK (ALT template)))) (ALT system) (ALT queries))) (RULE declaration (BLOCK (ALT OPEN_DECLARATION (+ (BLOCK (ALT declarationItem))) CLOSE_DECLARATION))) (RULE declarationItem (BLOCK (ALT declarationVar) (ALT declarationFunc))) (RULE declarationVar (BLOCK (ALT DATATYPE ID (? (BLOCK (ALT LBRACK INT (? (BLOCK (ALT ARRAY_SV))) RBRACK))) (? (BLOCK (ALT '='))) (? (BLOCK (ALT ID))) SEMICOLON))) (RULE declarationFunc (BLOCK (ALT (BLOCK (ALT DATATYPE) (ALT VOID)) ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN LBRACE RBRACE))) (RULE parameterList (BLOCK (ALT parameter (* (BLOCK (ALT COMMA parameter)))))) (RULE parameter (BLOCK (ALT ID) (ALT 'void'))) (RULE template (BLOCK (ALT OPEN_TEMPLATE nameSection (? (BLOCK (ALT templateParameter))) (* (BLOCK (ALT location) (ALT INIT) (ALT transition) (ALT comment))) CLOSE_TEMPLATE))) (RULE templateParameter (BLOCK (ALT OPEN_PARAMETER (BLOCK (ALT (? (BLOCK (ALT DATATYPE) (ALT VOID))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID))))) (* (BLOCK (ALT COMMA (? (BLOCK (ALT DATATYPE) (ALT VOID))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID)))))) CLOSE_PARAMETER))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE pointer (BLOCK (ALT STAR))) (RULE nameSection (BLOCK (ALT OPEN_TEMPLATE_NAME ID CLOSE_TEMPLATE_NAME))) (RULE system (BLOCK (ALT OPEN_SYSTEM 'system' ID SEMICOLON CLOSE_SYSTEM))) (RULE queries (BLOCK (ALT OPEN_QUERIES (* (BLOCK (ALT query))) CLOSE_QUERIES))) (RULE location (BLOCK (ALT OPEN_LOCATION 'id' EQUAL STRING 'x' EQUAL STRING 'y' EQUAL STRING '>' (? (BLOCK (ALT nameSection))) CLOSE_LOCATION))) (RULE inItLocation (BLOCK (ALT INIT STRING CLOSE_SOURCE_TARGET))) (RULE transition (BLOCK (ALT OPEN_TRANSITION source target (* (BLOCK (ALT label))) CLOSE_TRANSITION))) (RULE label (BLOCK (ALT OPEN_LABEL (? (BLOCK (ALT 'kind' EQUAL STRING))) GT expression CLOSE_LABEL))) (RULE expression (BLOCK (ALT (* (BLOCK (ALT ID (? (BLOCK (ALT ID))) (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQEQ) (ALT EQUAL) (ALT GE) (ALT LPAREN (* (BLOCK (ALT (BLOCK (ALT HEX_INT) (ALT (BLOCK (ALT ID MINUS LPAREN ID MINUS ID RPAREN))) (ALT ID) (ALT INT)) (? (BLOCK (ALT COMMA)))))) RPAREN) (ALT NOTEQ) (ALT PLUSPLUS))) (? (BLOCK (ALT (BLOCK (ALT (? (BLOCK (ALT LPAREN))) ID (BLOCK (ALT PERCENT) (ALT SLASH)) INT (? (BLOCK (ALT RPAREN))) (? (BLOCK (ALT SLASH))) (? (BLOCK (ALT INT))) PLUS QUOTE INT QUOTE))) (ALT (BLOCK (ALT QUOTE (BLOCK (ALT ID) (ALT EQUAL)) QUOTE))) (ALT (BLOCK (ALT ID PLUS INT))) (ALT ID) (ALT INT) (ALT ID LPAREN (? (BLOCK (ALT ID))) RPAREN))) (? (BLOCK (ALT COMMA)))) (ALT comment)))))) (RULE source (BLOCK (ALT OPEN_SOURCE STRING CLOSE_SOURCE_TARGET))) (RULE target (BLOCK (ALT OPEN_TARGET STRING CLOSE_SOURCE_TARGET))) (RULE query (BLOCK (ALT OPEN_QUERY OPEN_FORMULA CLOSE_FORMULA OPEN_COMMENT CLOSE_COMMENT CLOSE_QUERY))) (RULE comment (BLOCK (ALT UPPAAL_COMMENT_WITH_TEXT)))))
+2024-10-14 02:51:10:018 grammar LogManager.java:25 after: (COMBINED_GRAMMAR Uppaal2C (@ header {
+package SVUppaal2CTransformations;
+}) (RULES (RULE ARRAY_SV (BLOCK (ALT ':0'))) (RULE VOID (BLOCK (ALT 'void'))) (RULE DATATYPE (BLOCK (ALT 'int') (ALT 'double') (ALT 'char'))) (RULE ID (BLOCK (ALT [a-zA-Z_.:] (* (BLOCK (ALT [a-zA-Z0-9_.:])))))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE OPEN_DECLARATION (BLOCK (ALT '<declaration>'))) (RULE OPEN_TEMPLATE (BLOCK (ALT '<template>'))) (RULE OPEN_TEMPLATE_NAME (BLOCK (ALT '<name>'))) (RULE CLOSE_TEMPLATE_NAME (BLOCK (ALT '</name>'))) (RULE OPEN_PARAMETER (BLOCK (ALT '<parameter>'))) (RULE CLOSE_PARAMETER (BLOCK (ALT '</parameter>'))) (RULE OPEN_LOCATION (BLOCK (ALT '<location'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE CLOSE_LOCATION (BLOCK (ALT '</location>'))) (RULE INIT (BLOCK (ALT '<init ref="id0"/>'))) (RULE UPPAAL_COMMENT_WITH_TEXT (BLOCK (ALT '<!--' (* (BLOCK (ALT (~ (SET [<>]))))) '-->'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE NTA_OPEN (BLOCK (ALT '<nta>'))) (RULE NTA_CLOSE (BLOCK (ALT '</nta>'))) (RULE CLOSE_DECLARATION (BLOCK (ALT '</declaration>'))) (RULE CLOSE_SOURCE_TARGET (BLOCK (ALT '/>'))) (RULE CLOSE_TEMPLATE (BLOCK (ALT '</template>'))) (RULE OPEN_SYSTEM (BLOCK (ALT '<system>'))) (RULE CLOSE_SYSTEM (BLOCK (ALT '</system>'))) (RULE OPEN_QUERIES (BLOCK (ALT '<queries>'))) (RULE CLOSE_QUERIES (BLOCK (ALT '</queries>'))) (RULE OPEN_TRANSITION (BLOCK (ALT '<transition>'))) (RULE CLOSE_TRANSITION (BLOCK (ALT '</transition>'))) (RULE OPEN_LABEL (BLOCK (ALT '<label'))) (RULE CLOSE_LABEL (BLOCK (ALT '</label>'))) (RULE OPEN_SOURCE (BLOCK (ALT '<source ref='))) (RULE OPEN_TARGET (BLOCK (ALT '<target ref='))) (RULE OPEN_QUERY (BLOCK (ALT '<query>'))) (RULE CLOSE_QUERY (BLOCK (ALT '</query>'))) (RULE OPEN_FORMULA (BLOCK (ALT '<formula>'))) (RULE CLOSE_FORMULA (BLOCK (ALT '</formula>'))) (RULE OPEN_COMMENT (BLOCK (ALT '<comment>'))) (RULE CLOSE_COMMENT (BLOCK (ALT '</comment>'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE file (BLOCK (ALT (BLOCK (ALT ntaSection)) EOF))) (RULE ntaSection (BLOCK (ALT NTA_OPEN (+ (BLOCK (ALT ntaItem))) NTA_CLOSE))) (RULE ntaItem (BLOCK (ALT (+ (BLOCK (ALT declaration)))) (ALT (+ (BLOCK (ALT template)))) (ALT system) (ALT queries))) (RULE declaration (BLOCK (ALT OPEN_DECLARATION (+ (BLOCK (ALT declarationItem))) CLOSE_DECLARATION))) (RULE declarationItem (BLOCK (ALT declarationVar) (ALT declarationFunc))) (RULE declarationVar (BLOCK (ALT DATATYPE ID (? (BLOCK (ALT LBRACK INT (? (BLOCK (ALT ARRAY_SV))) RBRACK))) (? (BLOCK (ALT '='))) (? (BLOCK (ALT ID))) SEMICOLON))) (RULE declarationFunc (BLOCK (ALT (SET DATATYPE VOID) ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN LBRACE RBRACE))) (RULE parameterList (BLOCK (ALT parameter (* (BLOCK (ALT COMMA parameter)))))) (RULE parameter (BLOCK (ALT (SET ID 'void')))) (RULE template (BLOCK (ALT OPEN_TEMPLATE nameSection (? (BLOCK (ALT templateParameter))) (* (BLOCK (ALT location) (ALT INIT) (ALT transition) (ALT comment))) CLOSE_TEMPLATE))) (RULE templateParameter (BLOCK (ALT OPEN_PARAMETER (BLOCK (ALT (? (BLOCK (ALT (SET DATATYPE VOID)))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID))))) (* (BLOCK (ALT COMMA (? (BLOCK (ALT (SET DATATYPE VOID)))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID)))))) CLOSE_PARAMETER))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE pointer (BLOCK (ALT STAR))) (RULE nameSection (BLOCK (ALT OPEN_TEMPLATE_NAME ID CLOSE_TEMPLATE_NAME))) (RULE system (BLOCK (ALT OPEN_SYSTEM 'system' ID SEMICOLON CLOSE_SYSTEM))) (RULE queries (BLOCK (ALT OPEN_QUERIES (* (BLOCK (ALT query))) CLOSE_QUERIES))) (RULE location (BLOCK (ALT OPEN_LOCATION 'id' EQUAL STRING 'x' EQUAL STRING 'y' EQUAL STRING '>' (? (BLOCK (ALT nameSection))) CLOSE_LOCATION))) (RULE inItLocation (BLOCK (ALT INIT STRING CLOSE_SOURCE_TARGET))) (RULE transition (BLOCK (ALT OPEN_TRANSITION source target (* (BLOCK (ALT label))) CLOSE_TRANSITION))) (RULE label (BLOCK (ALT OPEN_LABEL (? (BLOCK (ALT 'kind' EQUAL STRING))) GT expression CLOSE_LABEL))) (RULE expression (BLOCK (ALT (* (BLOCK (ALT ID (? (BLOCK (ALT ID))) (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQEQ) (ALT EQUAL) (ALT GE) (ALT LPAREN (* (BLOCK (ALT (BLOCK (ALT HEX_INT) (ALT (BLOCK (ALT ID MINUS LPAREN ID MINUS ID RPAREN))) (ALT ID) (ALT INT)) (? (BLOCK (ALT COMMA)))))) RPAREN) (ALT NOTEQ) (ALT PLUSPLUS))) (? (BLOCK (ALT (BLOCK (ALT (? (BLOCK (ALT LPAREN))) ID (SET PERCENT SLASH) INT (? (BLOCK (ALT RPAREN))) (? (BLOCK (ALT SLASH))) (? (BLOCK (ALT INT))) PLUS QUOTE INT QUOTE))) (ALT (BLOCK (ALT QUOTE (SET ID EQUAL) QUOTE))) (ALT (BLOCK (ALT ID PLUS INT))) (ALT ID) (ALT INT) (ALT ID LPAREN (? (BLOCK (ALT ID))) RPAREN))) (? (BLOCK (ALT COMMA)))) (ALT comment)))))) (RULE source (BLOCK (ALT OPEN_SOURCE STRING CLOSE_SOURCE_TARGET))) (RULE target (BLOCK (ALT OPEN_TARGET STRING CLOSE_SOURCE_TARGET))) (RULE query (BLOCK (ALT OPEN_QUERY OPEN_FORMULA CLOSE_FORMULA OPEN_COMMENT CLOSE_COMMENT CLOSE_QUERY))) (RULE comment (BLOCK (ALT UPPAAL_COMMENT_WITH_TEXT)))))
+2024-10-14 02:51:10:046 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR Uppaal2C (@ header {
+package SVUppaal2CTransformations;
+}) (RULES (RULE file (BLOCK (ALT (BLOCK (ALT ntaSection)) EOF))) (RULE ntaSection (BLOCK (ALT NTA_OPEN (+ (BLOCK (ALT ntaItem))) NTA_CLOSE))) (RULE ntaItem (BLOCK (ALT (+ (BLOCK (ALT declaration)))) (ALT (+ (BLOCK (ALT template)))) (ALT system) (ALT queries))) (RULE declaration (BLOCK (ALT OPEN_DECLARATION (+ (BLOCK (ALT declarationItem))) CLOSE_DECLARATION))) (RULE declarationItem (BLOCK (ALT declarationVar) (ALT declarationFunc))) (RULE declarationVar (BLOCK (ALT DATATYPE ID (? (BLOCK (ALT LBRACK INT (? (BLOCK (ALT ARRAY_SV))) RBRACK))) (? (BLOCK (ALT '='))) (? (BLOCK (ALT ID))) SEMICOLON))) (RULE declarationFunc (BLOCK (ALT (SET DATATYPE VOID) ID LPAREN (? (BLOCK (ALT parameterList))) RPAREN LBRACE RBRACE))) (RULE parameterList (BLOCK (ALT parameter (* (BLOCK (ALT COMMA parameter)))))) (RULE parameter (BLOCK (ALT (SET ID 'void')))) (RULE template (BLOCK (ALT OPEN_TEMPLATE nameSection (? (BLOCK (ALT templateParameter))) (* (BLOCK (ALT location) (ALT INIT) (ALT transition) (ALT comment))) CLOSE_TEMPLATE))) (RULE templateParameter (BLOCK (ALT OPEN_PARAMETER (BLOCK (ALT (? (BLOCK (ALT (SET DATATYPE VOID)))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID))))) (* (BLOCK (ALT COMMA (? (BLOCK (ALT (SET DATATYPE VOID)))) (? (BLOCK (ALT qualifier))) (? (BLOCK (ALT pointer))) (? (BLOCK (ALT ID)))))) CLOSE_PARAMETER))) (RULE qualifier (BLOCK (ALT 'const'))) (RULE pointer (BLOCK (ALT STAR))) (RULE nameSection (BLOCK (ALT OPEN_TEMPLATE_NAME ID CLOSE_TEMPLATE_NAME))) (RULE system (BLOCK (ALT OPEN_SYSTEM 'system' ID SEMICOLON CLOSE_SYSTEM))) (RULE queries (BLOCK (ALT OPEN_QUERIES (* (BLOCK (ALT query))) CLOSE_QUERIES))) (RULE location (BLOCK (ALT OPEN_LOCATION 'id' EQUAL STRING 'x' EQUAL STRING 'y' EQUAL STRING '>' (? (BLOCK (ALT nameSection))) CLOSE_LOCATION))) (RULE inItLocation (BLOCK (ALT INIT STRING CLOSE_SOURCE_TARGET))) (RULE transition (BLOCK (ALT OPEN_TRANSITION source target (* (BLOCK (ALT label))) CLOSE_TRANSITION))) (RULE label (BLOCK (ALT OPEN_LABEL (? (BLOCK (ALT 'kind' EQUAL STRING))) GT expression CLOSE_LABEL))) (RULE expression (BLOCK (ALT (* (BLOCK (ALT ID (? (BLOCK (ALT ID))) (? (BLOCK (ALT LBRACK INT RBRACK))) (? (BLOCK (ALT EQEQ) (ALT EQUAL) (ALT GE) (ALT LPAREN (* (BLOCK (ALT (BLOCK (ALT HEX_INT) (ALT (BLOCK (ALT ID MINUS LPAREN ID MINUS ID RPAREN))) (ALT ID) (ALT INT)) (? (BLOCK (ALT COMMA)))))) RPAREN) (ALT NOTEQ) (ALT PLUSPLUS))) (? (BLOCK (ALT (BLOCK (ALT (? (BLOCK (ALT LPAREN))) ID (SET PERCENT SLASH) INT (? (BLOCK (ALT RPAREN))) (? (BLOCK (ALT SLASH))) (? (BLOCK (ALT INT))) PLUS QUOTE INT QUOTE))) (ALT (BLOCK (ALT QUOTE (SET ID EQUAL) QUOTE))) (ALT (BLOCK (ALT ID PLUS INT))) (ALT ID) (ALT INT) (ALT ID LPAREN (? (BLOCK (ALT ID))) RPAREN))) (? (BLOCK (ALT COMMA)))) (ALT comment)))))) (RULE source (BLOCK (ALT OPEN_SOURCE STRING CLOSE_SOURCE_TARGET))) (RULE target (BLOCK (ALT OPEN_TARGET STRING CLOSE_SOURCE_TARGET))) (RULE query (BLOCK (ALT OPEN_QUERY OPEN_FORMULA CLOSE_FORMULA OPEN_COMMENT CLOSE_COMMENT CLOSE_QUERY))) (RULE comment (BLOCK (ALT UPPAAL_COMMENT_WITH_TEXT)))))
+2024-10-14 02:51:10:047 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR Uppaal2CLexer (@ header {
+package SVUppaal2CTransformations;
+}) (RULES (RULE T__0 (BLOCK (ALT 'const'))) (RULE T__1 (BLOCK (ALT 'system'))) (RULE T__2 (BLOCK (ALT 'id'))) (RULE T__3 (BLOCK (ALT 'x'))) (RULE T__4 (BLOCK (ALT 'y'))) (RULE T__5 (BLOCK (ALT 'kind'))) (RULE ARRAY_SV (BLOCK (ALT ':0'))) (RULE VOID (BLOCK (ALT 'void'))) (RULE DATATYPE (BLOCK (ALT 'int') (ALT 'double') (ALT 'char'))) (RULE ID (BLOCK (ALT [a-zA-Z_.:] (* (BLOCK (ALT [a-zA-Z0-9_.:])))))) (RULE LBRACK (BLOCK (ALT '['))) (RULE RBRACK (BLOCK (ALT ']'))) (RULE LPAREN (BLOCK (ALT '('))) (RULE RPAREN (BLOCK (ALT ')'))) (RULE LBRACE (BLOCK (ALT '{'))) (RULE RBRACE (BLOCK (ALT '}'))) (RULE OPEN_DECLARATION (BLOCK (ALT '<declaration>'))) (RULE OPEN_TEMPLATE (BLOCK (ALT '<template>'))) (RULE OPEN_TEMPLATE_NAME (BLOCK (ALT '<name>'))) (RULE CLOSE_TEMPLATE_NAME (BLOCK (ALT '</name>'))) (RULE OPEN_PARAMETER (BLOCK (ALT '<parameter>'))) (RULE CLOSE_PARAMETER (BLOCK (ALT '</parameter>'))) (RULE OPEN_LOCATION (BLOCK (ALT '<location'))) (RULE EQUAL (BLOCK (ALT '='))) (RULE STRING (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9])))))) (RULE CLOSE_LOCATION (BLOCK (ALT '</location>'))) (RULE INIT (BLOCK (ALT '<init ref="id0"/>'))) (RULE UPPAAL_COMMENT_WITH_TEXT (BLOCK (ALT '<!--' (* (BLOCK (ALT (~ (SET [<>]))))) '-->'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE COLON (BLOCK (ALT ':'))) (RULE COMMA (BLOCK (ALT ','))) (RULE DOT (BLOCK (ALT '.'))) (RULE PLUS (BLOCK (ALT '+'))) (RULE PLUSPLUS (BLOCK (ALT '++'))) (RULE MINUS (BLOCK (ALT '-'))) (RULE STAR (BLOCK (ALT '*'))) (RULE SLASH (BLOCK (ALT '/'))) (RULE PERCENT (BLOCK (ALT '%'))) (RULE LT (BLOCK (ALT '<'))) (RULE GT (BLOCK (ALT '>'))) (RULE LE (BLOCK (ALT '<='))) (RULE GE (BLOCK (ALT '>='))) (RULE EQEQ (BLOCK (ALT '=='))) (RULE NOTEQ (BLOCK (ALT '!='))) (RULE QUOTE (BLOCK (ALT '\''))) (RULE DOLLAR (BLOCK (ALT '$'))) (RULE HEX_INT (BLOCK (ALT '0x' (+ (BLOCK (ALT [0-9a-fA-F])))))) (RULE NTA_OPEN (BLOCK (ALT '<nta>'))) (RULE NTA_CLOSE (BLOCK (ALT '</nta>'))) (RULE CLOSE_DECLARATION (BLOCK (ALT '</declaration>'))) (RULE CLOSE_SOURCE_TARGET (BLOCK (ALT '/>'))) (RULE CLOSE_TEMPLATE (BLOCK (ALT '</template>'))) (RULE OPEN_SYSTEM (BLOCK (ALT '<system>'))) (RULE CLOSE_SYSTEM (BLOCK (ALT '</system>'))) (RULE OPEN_QUERIES (BLOCK (ALT '<queries>'))) (RULE CLOSE_QUERIES (BLOCK (ALT '</queries>'))) (RULE OPEN_TRANSITION (BLOCK (ALT '<transition>'))) (RULE CLOSE_TRANSITION (BLOCK (ALT '</transition>'))) (RULE OPEN_LABEL (BLOCK (ALT '<label'))) (RULE CLOSE_LABEL (BLOCK (ALT '</label>'))) (RULE OPEN_SOURCE (BLOCK (ALT '<source ref='))) (RULE OPEN_TARGET (BLOCK (ALT '<target ref='))) (RULE OPEN_QUERY (BLOCK (ALT '<query>'))) (RULE CLOSE_QUERY (BLOCK (ALT '</query>'))) (RULE OPEN_FORMULA (BLOCK (ALT '<formula>'))) (RULE CLOSE_FORMULA (BLOCK (ALT '</formula>'))) (RULE OPEN_COMMENT (BLOCK (ALT '<comment>'))) (RULE CLOSE_COMMENT (BLOCK (ALT '</comment>'))) (RULE WS (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip)))))
+2024-10-14 02:51:10:209 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:307 semantics LogManager.java:25 tokens={EOF=-1, T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, ARRAY_SV=7, VOID=8, DATATYPE=9, ID=10, LBRACK=11, RBRACK=12, LPAREN=13, RPAREN=14, LBRACE=15, RBRACE=16, OPEN_DECLARATION=17, OPEN_TEMPLATE=18, OPEN_TEMPLATE_NAME=19, CLOSE_TEMPLATE_NAME=20, OPEN_PARAMETER=21, CLOSE_PARAMETER=22, OPEN_LOCATION=23, EQUAL=24, STRING=25, INT=26, CLOSE_LOCATION=27, INIT=28, UPPAAL_COMMENT_WITH_TEXT=29, SEMICOLON=30, COLON=31, COMMA=32, DOT=33, PLUS=34, PLUSPLUS=35, MINUS=36, STAR=37, SLASH=38, PERCENT=39, LT=40, GT=41, LE=42, GE=43, EQEQ=44, NOTEQ=45, QUOTE=46, DOLLAR=47, HEX_INT=48, NTA_OPEN=49, NTA_CLOSE=50, CLOSE_DECLARATION=51, CLOSE_SOURCE_TARGET=52, CLOSE_TEMPLATE=53, OPEN_SYSTEM=54, CLOSE_SYSTEM=55, OPEN_QUERIES=56, CLOSE_QUERIES=57, OPEN_TRANSITION=58, CLOSE_TRANSITION=59, OPEN_LABEL=60, CLOSE_LABEL=61, OPEN_SOURCE=62, OPEN_TARGET=63, OPEN_QUERY=64, CLOSE_QUERY=65, OPEN_FORMULA=66, CLOSE_FORMULA=67, OPEN_COMMENT=68, CLOSE_COMMENT=69, WS=70}
+2024-10-14 02:51:10:307 semantics LogManager.java:25 strings={'const'=1, 'system'=2, 'id'=3, 'x'=4, 'y'=5, 'kind'=6, ':0'=7, 'void'=8, '['=11, ']'=12, '('=13, ')'=14, '{'=15, '}'=16, '<declaration>'=17, '<template>'=18, '<name>'=19, '</name>'=20, '<parameter>'=21, '</parameter>'=22, '<location'=23, '='=24, '</location>'=27, '<init ref="id0"/>'=28, ';'=30, ':'=31, ','=32, '.'=33, '+'=34, '++'=35, '-'=36, '*'=37, '/'=38, '%'=39, '<'=40, '>'=41, '<='=42, '>='=43, '=='=44, '!='=45, '\''=46, '$'=47, '<nta>'=49, '</nta>'=50, '</declaration>'=51, '/>'=52, '</template>'=53, '<system>'=54, '</system>'=55, '<queries>'=56, '</queries>'=57, '<transition>'=58, '</transition>'=59, '<label'=60, '</label>'=61, '<source ref='=62, '<target ref='=63, '<query>'=64, '</query>'=65, '<formula>'=66, '</formula>'=67, '<comment>'=68, '</comment>'=69}
+2024-10-14 02:51:10:321 LL1 LogManager.java:25 
+DECISION 0 in rule ntaSection
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 look=[{17..18, 54, 56}, 50]
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 
+DECISION 1 in rule ntaItem
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 look=[17, {17..18, 50, 54, 56}]
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 
+DECISION 2 in rule ntaItem
+2024-10-14 02:51:10:322 LL1 LogManager.java:25 look=[18, {17..18, 50, 54, 56}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 3 in rule ntaItem
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[17, 18, 54, 56]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 4 in rule declaration
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[{8..9}, 51]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 5 in rule declarationItem
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[9, {8..9}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 6 in rule declarationVar
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[7, 12]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 7 in rule declarationVar
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[11, {10, 24, 30}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 8 in rule declarationVar
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[24, {10, 30}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 9 in rule declarationVar
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[10, 30]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 10 in rule declarationFunc
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[{8, 10}, 14]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 11 in rule parameterList
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[32, 14]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 12 in rule template
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[21, {23, 28..29, 53, 58}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 13 in rule template
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[23, 28, 58, 29]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 14 in rule template
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[{23, 28..29, 58}, 53]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 15 in rule templateParameter
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[{8..9}, {1, 10, 22, 32, 37}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 16 in rule templateParameter
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[1, {10, 22, 32, 37}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 17 in rule templateParameter
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[37, {10, 22, 32}]
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 
+DECISION 18 in rule templateParameter
+2024-10-14 02:51:10:323 LL1 LogManager.java:25 look=[10, {22, 32}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 19 in rule templateParameter
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[{8..9}, {1, 10, 22, 32, 37}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 20 in rule templateParameter
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[1, {10, 22, 32, 37}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 21 in rule templateParameter
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[37, {10, 22, 32}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 22 in rule templateParameter
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[10, {22, 32}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 23 in rule templateParameter
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 24 in rule queries
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[64, 57]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 25 in rule location
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[19, 27]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 26 in rule transition
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 27 in rule label
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[6, 41]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 28 in rule expression
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 look=[10, {10..11, 13, 24, 26, 29, 32, 35, 43..46, 61}]
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:324 LL1 LogManager.java:25 
+DECISION 29 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[11, {10, 13, 24, 26, 29, 32, 35, 43..46, 61}]
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 30 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[48, 10, 10, 26]
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 31 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[32, {10, 14, 26, 48}]
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 32 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 33 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[44, 24, 43, 13, 45, 35, {10, 13, 26, 29, 32, 46, 61}]
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 34 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[13, 10]
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 
+DECISION 35 in rule expression
+2024-10-14 02:51:10:325 LL1 LogManager.java:25 look=[14, {26, 34, 38}]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 36 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[38, {26, 34}]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 37 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[26, 34]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 38 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[10, 14]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 39 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[{10, 13}, 46, 10, 10, 26, 10, {10, 29, 32, 61}]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 40 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[32, {10, 29, 61}]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 41 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 look=[10, 29]
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? true
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 
+DECISION 42 in rule expression
+2024-10-14 02:51:10:326 LL1 LogManager.java:25 LL(1)? false
+2024-10-14 02:51:10:327 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:415 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:415 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:418 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:418 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:421 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:421 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:423 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+
+2024-10-14 02:51:10:423 action-translator LogManager.java:25 translate 
+package SVUppaal2CTransformations;
+

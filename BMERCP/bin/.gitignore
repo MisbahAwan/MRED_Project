@@ -1,0 +1,13 @@
+/C2SystemVerilogTransformations/
+/C2TreeTransformations/
+/C2UppaalTransformations/
+/GUIEditor/
+/SystemVerilog2CTransformation/
+/SystemVerilog2TreeTransformation/
+/SystemVerilog2UppaalTransformation/
+/Tree2CTransformation/
+/Tree2SystemVerilogTransformation/
+/Tree2UppaalTransformation/
+/Uppaal2CTransformations/
+/Uppaal2SystemVerilogTransformations/
+/Uppaal2TreeTransformations/

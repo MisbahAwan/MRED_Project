@@ -1,0 +1,151 @@
+module VerilogSimulation;
+
+int New_Mode_Flag;
+int initial_flag;
+int Running_Mode;
+int Set_Button;
+int Start_Button;
+int Standby_Button;
+int check_flag_VCV;
+int In_Init_Flag;
+int In_Start_Tick;
+int InEx_Flag;
+int peep_observed;
+int In_End_Tick;
+int Ex_Init_Flag;
+int p_plateau_flag;
+int p_plateau_cycles;
+int p_plateau;
+int Exhale_Time;
+int Inhale_Time;
+int ExtraDelayFlag;
+int volumeORpressureMode;
+int Sensors_Running;
+int check_flag_sensors;
+longint VCVmodeHandle;
+longint SensorsHandle;
+byte txx [12:0];
+int cmd_end [2:0];
+int t3;
+logic VCV_InRet;
+function real get_pressure(); 
+endfunction
+function void find_peep(); 
+endfunction
+function void set_flow(); 
+endfunction
+function void Suspend_All_Modes(void ); 
+endfunction
+function void Update_Control_Parameters(); 
+endfunction
+function void Start_VCVmode(void const argument); 
+ /* USER CODE BEGIN Start_VCVmode */
+ /* Infinite loop */
+ //for(;;)
+
+ //{
+
+ if(New_Mode_Flag==1) begin 
+   New_Mode_Flag = 0;
+   if(initial_flag==1) begin 
+   initial_flag = 0;
+   t3 = HAL_GetTick ();
+    end 
+
+   else begin 
+   New_Mode_Shift ();
+   if(Running_Mode!=1) begin 
+   osThreadSuspend (VCVmodeHandle);
+    end 
+  end 
+  end 
+ if(Set_Button==1) begin 
+   Set_Button = 0;
+   volumeORpressureMode = 0;
+   Update_Internal_Parameters ();
+   Update_Control_Parameters ();
+    end 
+ if(Start_Button==1) begin 
+   Start_Button = 0;
+   osThreadResume (SensorsHandle);
+   Sensors_Running = 1;
+   Update_Internal_Parameters ();
+   Update_Control_Parameters ();
+    end 
+ if(Standby_Button==1) begin 
+   Standby_Button = 0;
+   HAL_DAC_Stop_DMA (hdac,DAC_CHANNEL_1);
+   Sensors_Running = 0;
+   Suspend_All_Modes ();
+    end 
+ /* STANDBY Button */
+ check_flag_VCV ++;
+   check_flag_sensors = 0;
+   /* Initialization Before Inhalation */
+ HAL_GPIO_WritePin (GPIOE,Pressure_SV_Pin,GPIO_PIN_RESET);
+   Check_Alarm_Change_To_High_Priority ();
+   HAL_GPIO_WritePin (GPIOF,GPIO_PIN_7,GPIO_PIN_RESET);
+   In_Init_Flag = 1;
+   /* INHALE CYCLE */
+ InEx_Flag = 1;
+   HAL_GPIO_WritePin (GPIOG,GPIO_PIN_13,GPIO_PIN_SET);
+   HAL_GPIO_WritePin (GPIOF,GPIO_PIN_7,GPIO_PIN_SET);
+   In_Start_Tick = HAL_GetTick ();
+   VCV_InRet = osSignalWait (0x0001,Inhale_Time);
+   // Volume Cycling
+
+ HAL_GPIO_WritePin (GPIOF,GPIO_PIN_7,GPIO_PIN_RESET);
+   if(VCV_InRet.status!=osEventTimeout) begin 
+   In_End_Tick = HAL_GetTick ();
+   ExtraDelayFlag = 1;
+   osDelay (Inhale_Time-(In_End_Tick - In_Start_Tick));
+   ExtraDelayFlag = 0;
+    end 
+ /* Initialization Before Exhalation */
+ Ex_Init_Flag = 1;
+   /* EXHALE CYCLE */
+ InEx_Flag = 0;
+   //Peak Plateau Measurement
+
+ p_plateau_cycles = p_plateau_cycles +1;
+   if(p_plateau_cycles>=50) begin 
+   count = 0;
+   p_plateau_flag = 1;
+   osDelay (5000);
+   p_plateau = get_pressure ();
+   txx [0] = 'p';
+   txx [1] = 'p';
+   txx [2] = 'l';
+   txx [3] = 'a';
+   txx [4] = 't';
+   txx [5] = '.';
+   txx [6] = 'v';
+   txx [7] = 'a';
+   txx [8] = 'l';
+   txx [9] = '=';
+   txx [10] = p_plateau/100 + '0';
+   txx [11] = (p_plateau%100)/10 + '0';
+   txx [12] = p_plateau%10 + '0';
+   HAL_UART_Transmit (huart3,int ' txx,$bits(txx),10);
+   HAL_UART_Transmit (huart3,int ' cmd_end,$bits(cmd_end),10);
+   p_plateau_cycles = 0;
+   p_plateau_flag = 0;
+    end 
+ /*Exhalation Starts */
+ HAL_GPIO_WritePin (GPIOE,Pressure_SV_Pin,GPIO_PIN_RESET);
+   HAL_GPIO_WritePin (GPIOG,GPIO_PIN_14,GPIO_PIN_SET);
+   HAL_GPIO_WritePin (GPIOG,GPIO_PIN_5,GPIO_PIN_SET);
+   osDelay (Exhale_Time);
+   HAL_GPIO_WritePin (GPIOG,GPIO_PIN_5,GPIO_PIN_RESET);
+   HAL_GPIO_WritePin (GPIOG,GPIO_PIN_14,GPIO_PIN_RESET);
+   peep_observed = int ' get_pressure ();
+   Alarm_Check ();
+   find_peep ();
+   set_flow ();
+   // }
+
+ /* USER CODE END Start_VCVmode */
+endfunction
+
+
+endmodule

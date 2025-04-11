@@ -1,0 +1,74 @@
+void Start_Alarms(void const * argument)
+{
+  /* USER CODE BEGIN Start_Alarms */
+  /* Infinite loop */
+  //for(;;)
+  //{
+		osSignalWait(0x0001, osWaitForever);
+
+		uint8_t a = 0;
+
+		while(a < Net_Data_Size)
+		{
+			for(uint8_t count = 0; count < 7; count++)
+			{
+				buffer_array[count] = (uint32_t) rxDataArray[a];
+				a++;
+			}
+
+			switch(buffer_array[1]-48)
+			{
+				case 1: /* PIP */
+					if((buffer_array[2] - 48) == 1)
+					{ PIP_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ PIP_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 2: /* RR */
+					if((buffer_array[2] - 48) == 1)
+					{ RR_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ RR_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 3: /* MV */
+					if((buffer_array[2] - 48) == 1)
+					{ MV_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ MV_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 4: /* VTE */
+					if((buffer_array[2] - 48) == 1)
+					{ VTE_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ VTE_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 5: /* VTI */
+					if((buffer_array[2] - 48) == 1)
+					{ VTI_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ VTI_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 6: /* VTS */
+					if((buffer_array[2] - 48) == 1)
+					{ VTS_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ VTS_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 7: /* Apnea */
+					if((buffer_array[2] - 48) == 1)
+					{ Apnea_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ Apnea_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				case 8: /* PEEP */
+					if((buffer_array[2] - 48) == 1)
+					{ PEEP_upThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					if((buffer_array[2] - 48) == 0)
+					{ PEEP_lowThresh = concat_digits((buffer_array[3] - 48), (buffer_array[4] - 48), (buffer_array[5] - 48), (buffer_array[6] - 48)); }
+					break;
+				default: break;
+			}
+		}
+  //}
+  /* USER CODE END Start_Alarms */
+}

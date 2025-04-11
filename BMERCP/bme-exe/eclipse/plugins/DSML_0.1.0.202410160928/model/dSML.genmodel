@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/DSML/src-gen" creationIcons="false" editDirectory="/DSML.edit/src-gen"
+    editorDirectory="/DSML.editor/src-gen" modelPluginID="DSML" modelName="DSML" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>dSML.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="DSML" disposableProviderFactory="true" ecorePackage="dSML.ecore#/">
+    <genClasses ecoreClass="dSML.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Parameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Parameter/dataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Parameter/qualifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Parameter/pointer"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/isGlobal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/dataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Attribute/initialValue"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Component">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Component/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Component/parameter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Component/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Component/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Component/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Component/declaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Component/print"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//System">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//System/component"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//System/declaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//System/comment"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Declaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Declaration/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Declaration/functionprototype"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Statement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Statement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Statement/switch"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Statement/functioncall"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Statement/assignment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Statement/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Statement/if"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Expression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Expression/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Expression/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Expression/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Expression/attribute"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Comment/commentText"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Assignment/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Assignment/leftAttribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Assignment/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Assignment/AssignedSide"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//FunctionCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//FunctionCall/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//FunctionCall/functionName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//FunctionCall/parameterString"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Print">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Print/printText"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//Switch">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Switch/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Switch/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//Switch/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Switch/switchcase"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//Switch/assignment"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//If/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//If/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//If/variable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//If/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//If/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//If/assignment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//If/if"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//If/functioncall"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//switchCase">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//switchCase/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//switchCase/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//switchCase/assignment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//switchCase/functioncall"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//switchCase/comment"/>
+    </genClasses>
+    <genClasses ecoreClass="dSML.ecore#//FunctionPrototype">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//FunctionPrototype/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dSML.ecore#//FunctionPrototype/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dSML.ecore#//FunctionPrototype/parameter"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
