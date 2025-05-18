@@ -3,7 +3,7 @@ A Blended Modeling Framework for Real-time Design and Verification of Safety Cri
 
 1) Project demo can be accessed using below Google drive link:
 
-  https://drive.google.com/drive/folders/1LDN6khRQ8fAuSqv0fp1p6GLG0IKBINOh?usp=sharing
+  https://drive.google.com/file/d/1ejddrLd9yCCUqz61y58VWO0QOiTcD2rY/view?usp=sharing
 
 2) Project RCP can be accessed using below Github link:
    
